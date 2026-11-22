@@ -3,27 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NexusTech — Loja & Catálogo de Produtos</title>
-  <meta name="description" content="Catálogo moderno de tecnologia, acessórios e periféricos de alta performance com entrega rápida e checkout direto.">
+  <title>AURA — Casa, Decoração & Utensílios de Cozinha</title>
+  <meta name="description" content="Curadoria exclusiva de decoração afetiva, cerâmicas artesanais, utensílios gourmet e peças para mesa posta. Transforme sua casa em um refúgio acolhedor.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Header / Barra de Navegação -->
-  <header class="header">
+
+  <!-- Barra Superior de Destaque -->
+  <div class="top-announcement">
+    <div class="container announcement-content">
+      <span class="announcement-pill">Oferta Exclusiva</span>
+      <p class="announcement-text">
+        ✦ <strong>Frete Grátis</strong> para compras acima de R$ 250 • Use o cupom <strong>BEMVINDO</strong> para 10% OFF • Até 6x sem juros ✦
+      </p>
+    </div>
+  </div>
+
+  <!-- Header / Barra de Navegação Principal -->
+  <header class="header" id="mainHeader">
     <div class="container header-container">
+      
+      <!-- Marca / Logo -->
       <a href="#" class="brand">
-        <div class="brand-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-            <polyline points="2 17 12 22 22 17"></polyline>
-            <polyline points="2 12 12 17 22 12"></polyline>
-          </svg>
+        <span class="brand-monogram">A</span>
+        <div class="brand-text-group">
+          <span class="brand-name">AURA</span>
+          <span class="brand-tagline">CASA & OBJETOS</span>
         </div>
-        <span class="brand-text">Nexus<strong>Tech</strong></span>
       </a>
+
+      <!-- Menu de Navegação Rápida (Desktop) -->
+      <nav class="nav-menu">
+        <a href="#catalogo" class="nav-link active" data-nav-category="all">Todos</a>
+        <a href="#catalogo" class="nav-link" data-nav-category="decoracao">Decoração</a>
+        <a href="#catalogo" class="nav-link" data-nav-category="utensilios">Utensílios</a>
+        <a href="#catalogo" class="nav-link" data-nav-category="mesa">Mesa Posta</a>
+        <a href="#catalogo" class="nav-link" data-nav-category="aromas">Aromas</a>
+      </nav>
 
       <!-- Barra de Busca -->
       <div class="search-box">
@@ -31,12 +50,13 @@
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        <input type="text" id="searchInput" placeholder="Buscar produtos, categorias..." autocomplete="off">
+        <input type="text" id="searchInput" placeholder="Buscar vasos, utensílios, velas..." autocomplete="off">
         <button id="clearSearchBtn" class="clear-search-btn" title="Limpar busca" style="display: none;">&times;</button>
       </div>
 
       <!-- Ações do Cabeçalho -->
       <div class="header-actions">
+        <!-- Alternar Tema -->
         <button id="themeToggleBtn" class="action-btn" title="Alternar tema claro/escuro" aria-label="Alternar tema">
           <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="5"></circle>
@@ -54,241 +74,478 @@
           </svg>
         </button>
 
-        <button id="cartBtn" class="action-btn cart-btn" aria-label="Abrir carrinho">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="9" cy="21" r="1"></circle>
-            <circle cx="20" cy="21" r="1"></circle>
-            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        <!-- Favoritos / Wishlist -->
+        <button id="wishlistBtn" class="action-btn" title="Meus Favoritos" aria-label="Ver favoritos">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
           </svg>
+          <span id="wishlistCountBadge" class="badge-count" style="display: none;">0</span>
+        </button>
+
+        <!-- Botão Sacola / Carrinho -->
+        <button id="cartBtn" class="action-btn cart-btn" aria-label="Abrir sacola de compras">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="cart-btn-label">Sacola</span>
           <span id="cartCountBadge" class="badge-count">0</span>
         </button>
       </div>
+
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero">
+  <!-- Hero Section Editorial -->
+  <section class="hero-section">
     <div class="container hero-container">
+      
+      <!-- Texto do Hero -->
       <div class="hero-content">
-        <span class="hero-tag">🔥 Ofertas Especiais de Lançamento</span>
-        <h1 class="hero-title">Tecnologia de ponta para elevar o seu dia a dia</h1>
-        <p class="hero-subtitle">Descubra periféricos premium, gadgets inteligentes e acessórios ergonômicos com garantia total e entrega rápida para todo o Brasil.</p>
-        <div class="hero-buttons">
-          <a href="#catalog" class="btn btn-primary">Ver Catálogo Completo</a>
-          <button id="heroWhatsAppBtn" class="btn btn-secondary">
+        <div class="hero-pill">
+          <span class="pill-dot"></span>
+          <span>Coleção Harmonia 2026</span>
+        </div>
+        <h1 class="hero-title">
+          A arte de transformar espaços em <em>refúgios acolhedores</em>.
+        </h1>
+        <p class="hero-description">
+          Curadoria autoral de cerâmicas artesanais, utensílios nobres para sua cozinha e peças de decoração desenhadas para durar gerações.
+        </p>
+        
+        <div class="hero-cta-group">
+          <a href="#catalogo" class="btn btn-primary">
+            <span>Explorar Coleção</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
             </svg>
-            Falar no WhatsApp
+          </a>
+          <button class="btn btn-outline" id="heroFilterUtensilsBtn">
+            Ver Utensílios & Mesa
           </button>
         </div>
+
+        <!-- Micro-provas Sociais -->
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-stars">★★★★★</div>
+            <span class="stat-text"><strong>4.9 / 5</strong> de satisfação</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-number">+10.000</span>
+            <span class="stat-text">Casas transformadas</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-number">100%</span>
+            <span class="stat-text">Matérias-primas nobres</span>
+          </div>
+        </div>
       </div>
-      
-      <!-- Benefícios em destaque -->
-      <div class="hero-features">
-        <div class="feature-item">
-          <div class="feature-icon">🚀</div>
-          <div>
-            <strong>Envio Rápido</strong>
-            <p>Despacho em até 24h úteis</p>
+
+      <!-- Imagens Estilizadas do Hero -->
+      <div class="hero-visual">
+        <div class="hero-image-card main-card">
+          <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=900&auto=format&fit=crop&q=85" alt="Sala de estar acolhedora e elegante decorada pela Aura" loading="eager">
+          <div class="floating-badge">
+            <span class="badge-subtitle">Design Orgânico</span>
+            <strong class="badge-title">Cerâmica Gres & Madeira Acácia</strong>
           </div>
         </div>
-        <div class="feature-item">
-          <div class="feature-icon">🛡️</div>
-          <div>
-            <strong>Garantia de 1 Ano</strong>
-            <p>Segurança e tranquilidade</p>
-          </div>
+        <div class="hero-image-card sub-card">
+          <img src="https://images.unsplash.com/photo-1590794056226-79ef3a8147e1?w=500&auto=format&fit=crop&q=85" alt="Utensílios de cozinha nobres em madeira" loading="lazy">
         </div>
-        <div class="feature-item">
-          <div class="feature-icon">💳</div>
-          <div>
-            <strong>Até 10x sem juros</strong>
-            <p>Ou 5% de desconto no Pix</p>
-          </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Categorias Rápidas (Stories / Badges Visuais) -->
+  <section class="quick-categories-section">
+    <div class="container">
+      <div class="section-tag-center">Coleções em Foco</div>
+      <div class="categories-carousel">
+        <button class="category-pill-card active" data-category="all">
+          <span class="pill-icon">✨</span>
+          <span class="pill-name">Todos os Itens</span>
+        </button>
+        <button class="category-pill-card" data-category="decoracao">
+          <span class="pill-icon">🏺</span>
+          <span class="pill-name">Decoração & Vasos</span>
+        </button>
+        <button class="category-pill-card" data-category="utensilios">
+          <span class="pill-icon">🍳</span>
+          <span class="pill-name">Cozinha & Utensílios</span>
+        </button>
+        <button class="category-pill-card" data-category="mesa">
+          <span class="pill-icon">🍽️</span>
+          <span class="pill-name">Mesa Posta</span>
+        </button>
+        <button class="category-pill-card" data-category="aromas">
+          <span class="pill-icon">🕯️</span>
+          <span class="pill-name">Aromas & Iluminação</span>
+        </button>
+        <button class="category-pill-card" data-category="texteis">
+          <span class="pill-icon">🛋️</span>
+          <span class="pill-name">Têxteis & Conforto</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Barra de Diferenciais / Trust Badges -->
+  <section class="trust-bar">
+    <div class="container trust-grid">
+      <div class="trust-card">
+        <div class="trust-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+          </svg>
+        </div>
+        <div class="trust-info">
+          <h4>Curadoria Exclusiva</h4>
+          <p>Peças autorais com acabamento artesanal único.</p>
+        </div>
+      </div>
+
+      <div class="trust-card">
+        <div class="trust-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+          </svg>
+        </div>
+        <div class="trust-info">
+          <h4>Embalagem Segura</h4>
+          <p>Proteção anti-impacto ecológica para cerâmicas e vidros.</p>
+        </div>
+      </div>
+
+      <div class="trust-card">
+        <div class="trust-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+            <line x1="1" y1="10" x2="23" y2="10"></line>
+          </svg>
+        </div>
+        <div class="trust-info">
+          <h4>Até 6x Sem Juros</h4>
+          <p>Ou 5% de desconto especial em pagamentos via PIX.</p>
+        </div>
+      </div>
+
+      <div class="trust-card">
+        <div class="trust-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+        </div>
+        <div class="trust-info">
+          <h4>Atendimento Consultivo</h4>
+          <p>Suporte humano via WhatsApp para harmonizar seu ambiente.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Seção do Catálogo -->
-  <main class="container catalog-section" id="catalog">
-    <!-- Barra de Filtros e Ordenação -->
-    <div class="catalog-header">
-      <div class="category-filters" id="categoryFilters">
-        <button class="filter-chip active" data-category="all">Todos</button>
-        <button class="filter-chip" data-category="audio">Fones & Áudio</button>
-        <button class="filter-chip" data-category="wearables">Smartwatches</button>
-        <button class="filter-chip" data-category="perifericos">Periféricos</button>
-        <button class="filter-chip" data-category="acessorios">Acessórios</button>
+  <!-- Seção Principal do Catálogo -->
+  <main class="catalog-section" id="catalogo">
+    <div class="container">
+      
+      <!-- Cabeçalho do Catálogo com Filtros e Ordenação -->
+      <div class="catalog-header">
+        <div>
+          <span class="section-tag">Nossa Seleção</span>
+          <h2 class="section-title">Peças para Inspirar seu Lar</h2>
+          <p class="section-subtitle" id="resultsCount">Carregando catálogo...</p>
+        </div>
+
+        <!-- Seletor de Ordenação -->
+        <div class="sort-wrapper">
+          <label for="sortSelect" class="sort-label">Ordenar por:</label>
+          <div class="select-styled">
+            <select id="sortSelect">
+              <option value="default">Destaques da Curadoria</option>
+              <option value="price-asc">Menor Preço</option>
+              <option value="price-desc">Maior Preço</option>
+              <option value="rating">Melhor Avaliados</option>
+            </select>
+          </div>
+        </div>
       </div>
 
-      <div class="catalog-sort">
-        <label for="sortSelect">Ordenar por:</label>
-        <select id="sortSelect">
-          <option value="default">Destaques</option>
-          <option value="price-asc">Menor Preço</option>
-          <option value="price-desc">Maior Preço</option>
-          <option value="rating-desc">Mais Bem Avaliados</option>
-        </select>
+      <!-- Grid de Produtos -->
+      <div class="products-grid" id="productsGrid">
+        <!-- Renderizado dinamicamente via app.js -->
       </div>
-    </div>
 
-    <!-- Contador de Resultados -->
-    <div class="results-info">
-      <span id="resultsCount">Exibindo 8 produtos</span>
-    </div>
+      <!-- Estado Vazio (Nenhum produto encontrado) -->
+      <div class="empty-state" id="emptyState" style="display: none;">
+        <div class="empty-icon">🏺</div>
+        <h3>Nenhuma peça encontrada</h3>
+        <p>Não encontramos produtos correspondentes ao seu filtro ou busca atual.</p>
+        <button id="resetFiltersBtn" class="btn btn-primary">Limpar Todos os Filtros</button>
+      </div>
 
-    <!-- Grid de Produtos -->
-    <div class="products-grid" id="productsGrid">
-      <!-- Inserido dinamicamente via app.js -->
-    </div>
-
-    <!-- Estado Vazio -->
-    <div class="empty-state" id="emptyState" style="display: none;">
-      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="11" cy="11" r="8"></circle>
-        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        <line x1="8" y1="11" x2="14" y2="11"></line>
-      </svg>
-      <h3>Nenhum produto encontrado</h3>
-      <p>Tente buscar por outro termo ou selecione uma categoria diferente.</p>
-      <button class="btn btn-outline" id="resetFiltersBtn">Limpar filtros</button>
     </div>
   </main>
 
-  <!-- Modal de Detalhes do Produto (Quick View) -->
-  <div class="modal-overlay" id="productModalOverlay">
-    <div class="modal-card" id="productModal">
+  <!-- Banner Editorial / Storytelling -->
+  <section class="editorial-banner">
+    <div class="container editorial-container">
+      <div class="editorial-image">
+        <img src="https://images.unsplash.com/photo-1615865417491-9941019fbc00?w=800&auto=format&fit=crop&q=80" alt="Mesa posta acolhedora" loading="lazy">
+      </div>
+      <div class="editorial-text">
+        <span class="editorial-tag">Guia de Estilo</span>
+        <h2>A arte da mesa posta: Como receber com afeto</h2>
+        <p>
+          Reunir quem amamos em volta da mesa é um dos maiores prazeres da vida. Nossas cerâmicas e utensílios em madeira nobre foram criados para tornar esses encontros inesquecíveis, cheios de beleza simples e autêntica.
+        </p>
+        <div class="editorial-quote">
+          “A casa deve ser a moldura que acolhe nossas melhores memórias.”
+        </div>
+        <a href="#catalogo" class="btn btn-outline" id="editorialCtaBtn">Ver Linha Mesa & Cozinha</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Showcase Instagram / Galeria Social -->
+  <section class="instagram-showcase">
+    <div class="container">
+      <div class="instagram-header">
+        <span class="section-tag">Galeria Visual</span>
+        <h3 class="section-title">Inspire-se no @auracasa</h3>
+        <p class="section-subtitle">Compartilhe seu ambiente usando a hashtag <strong>#MinhaAuraHome</strong></p>
+      </div>
+      <div class="instagram-grid">
+        <div class="insta-item">
+          <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=600&auto=format&fit=crop&q=80" alt="Decoração minimalista" loading="lazy">
+          <div class="insta-overlay"><span>@auracasa</span></div>
+        </div>
+        <div class="insta-item">
+          <img src="https://images.unsplash.com/photo-1603006905003-be475563bc59?w=600&auto=format&fit=crop&q=80" alt="Vela aromática em ambiente decorado" loading="lazy">
+          <div class="insta-overlay"><span>@auracasa</span></div>
+        </div>
+        <div class="insta-item">
+          <img src="https://images.unsplash.com/photo-1590736704728-f4730bb30770?w=600&auto=format&fit=crop&q=80" alt="Tábua gourmet e utensílios de cozinha" loading="lazy">
+          <div class="insta-overlay"><span>@auracasa</span></div>
+        </div>
+        <div class="insta-item">
+          <img src="https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?w=600&auto=format&fit=crop&q=80" alt="Manta de linho em poltrona acolhedora" loading="lazy">
+          <div class="insta-overlay"><span>@auracasa</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="newsletter-section">
+    <div class="container newsletter-box">
+      <div class="newsletter-content">
+        <span class="section-tag">Clube Aura</span>
+        <h3>Ganhe 10% OFF no seu primeiro pedido</h3>
+        <p>Receba em primeira mão lançamentos de coleções, inspirações para sua casa e cupons exclusivos.</p>
+        <form class="newsletter-form" id="newsletterForm">
+          <input type="email" id="newsletterEmail" placeholder="Digite seu melhor e-mail..." required>
+          <button type="submit" class="btn btn-primary">Inscrever-se</button>
+        </form>
+        <span class="newsletter-notice" id="newsletterNotice">Sem spam. Você pode cancelar quando quiser.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rodapé Elegante -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      
+      <!-- Coluna Marca -->
+      <div class="footer-col brand-col">
+        <div class="brand">
+          <span class="brand-monogram">A</span>
+          <div class="brand-text-group">
+            <span class="brand-name">AURA</span>
+            <span class="brand-tagline">CASA & OBJETOS</span>
+          </div>
+        </div>
+        <p class="footer-description">
+          Curadoria de peças que contam histórias. Peças feitas com alma para lares cheios de vida e aconchego.
+        </p>
+        <div class="social-links">
+          <a href="#" aria-label="Instagram" class="social-icon">Instagram</a>
+          <a href="#" aria-label="Pinterest" class="social-icon">Pinterest</a>
+          <a href="#" aria-label="WhatsApp" class="social-icon">WhatsApp</a>
+        </div>
+      </div>
+
+      <!-- Links de Navegação -->
+      <div class="footer-col">
+        <h4>Coleções</h4>
+        <ul>
+          <li><a href="#catalogo" data-footer-category="decoracao">Decoração & Vasos</a></li>
+          <li><a href="#catalogo" data-footer-category="utensilios">Utensílios de Cozinha</a></li>
+          <li><a href="#catalogo" data-footer-category="mesa">Mesa Posta & Porcelanas</a></li>
+          <li><a href="#catalogo" data-footer-category="aromas">Velas & Aromatizadores</a></li>
+          <li><a href="#catalogo" data-footer-category="texteis">Têxteis & Mantas</a></li>
+        </ul>
+      </div>
+
+      <!-- Ajuda e Políticas -->
+      <div class="footer-col">
+        <h4>Atendimento & Suporte</h4>
+        <ul>
+          <li><a href="#">Dúvidas Frequentes (FAQ)</a></li>
+          <li><a href="#">Política de Trocas e Devoluções</a></li>
+          <li><a href="#">Prazos e Rastreamento</a></li>
+          <li><a href="#">Guia de Cuidados com as Peças</a></li>
+          <li><a href="#">Fale com Nossa Curadora</a></li>
+        </ul>
+      </div>
+
+      <!-- Pagamento e Segurança -->
+      <div class="footer-col">
+        <h4>Segurança & Pagamentos</h4>
+        <p class="footer-small">Pague com total segurança:</p>
+        <div class="payment-badges">
+          <span class="payment-badge">PIX (5% OFF)</span>
+          <span class="payment-badge">Cartão até 6x</span>
+          <span class="payment-badge">Boleto</span>
+        </div>
+        <div class="security-seal">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <span>Ambiente 100% Seguro & Protegido</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Linha Final de Copyright -->
+    <div class="footer-bottom">
+      <div class="container footer-bottom-content">
+        <p>&copy; 2026 AURA Casa & Décor. Todos os direitos reservados. Feito com amor e carinho.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Termos de Uso</a>
+          <span>•</span>
+          <a href="#">Privacidade</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       Gaveta Lateral do Carrinho (Drawer)
+       ========================================================================= -->
+  <div class="cart-overlay" id="cartOverlay">
+    <div class="cart-drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-label="Sacola de compras">
+      
+      <!-- Cabeçalho da Sacola -->
+      <div class="cart-header">
+        <div class="cart-title-group">
+          <h3>Sua Sacola</h3>
+          <span class="cart-badge-qty" id="cartDrawerCount">0 itens</span>
+        </div>
+        <button id="cartCloseBtn" class="cart-close-btn" aria-label="Fechar sacola">&times;</button>
+      </div>
+
+      <!-- Barra de Frete Grátis Dinâmica -->
+      <div class="shipping-progress-box">
+        <div class="shipping-label-group">
+          <span id="shippingNoticeText">Adicione mais R$ 250,00 para <strong>Frete Grátis</strong></span>
+        </div>
+        <div class="shipping-progress-bar">
+          <div class="shipping-progress-fill" id="shippingProgressBar" style="width: 0%;"></div>
+        </div>
+      </div>
+
+      <!-- Lista de Itens do Carrinho -->
+      <div class="cart-body">
+        <div class="cart-items" id="cartItemsList">
+          <!-- Renderizado via app.js -->
+        </div>
+
+        <!-- Estado Vazio da Sacola -->
+        <div class="cart-empty" id="cartEmptyState" style="display: none;">
+          <div class="cart-empty-icon">🛍️</div>
+          <h4>Sua sacola está vazia</h4>
+          <p>Inspire-se em nossas peças e preencha sua casa de aconchego.</p>
+          <button class="btn btn-outline" id="cartEmptyContinueBtn">Continuar Comprando</button>
+        </div>
+      </div>
+
+      <!-- Rodapé do Carrinho com Totais e Checkout WhatsApp -->
+      <div class="cart-footer" id="cartFooter">
+        
+        <!-- Cupom de Desconto -->
+        <div class="coupon-box">
+          <div class="coupon-input-wrapper">
+            <input type="text" id="couponInput" placeholder="Cupom de desconto (ex: BEMVINDO)" uppercase>
+            <button id="applyCouponBtn" class="btn-coupon">Aplicar</button>
+          </div>
+          <div id="couponMessage" class="coupon-message" style="display: none;"></div>
+        </div>
+
+        <!-- Linhas de Totais -->
+        <div class="cart-totals">
+          <div class="total-row">
+            <span>Subtotal</span>
+            <span id="cartSubtotal">R$ 0,00</span>
+          </div>
+          <div class="total-row discount-row" id="discountRow" style="display: none;">
+            <span>Desconto Aplicado</span>
+            <span id="cartDiscount">- R$ 0,00</span>
+          </div>
+          <div class="total-row">
+            <span>Frete</span>
+            <span id="cartShippingValue" class="text-accent">Calcular no fechamento</span>
+          </div>
+          <div class="total-row total-highlight">
+            <span>Total Estimado</span>
+            <span id="cartTotal">R$ 0,00</span>
+          </div>
+          <div class="installments-hint" id="cartInstallments">
+            ou até 6x sem juros
+          </div>
+        </div>
+
+        <!-- Botão Principal: Finalizar no WhatsApp -->
+        <button id="checkoutWhatsAppBtn" class="btn btn-whatsapp btn-block">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm.01 1.67c4.55 0 8.24 3.7 8.24 8.24 0 2.2-.86 4.28-2.42 5.84-1.56 1.56-3.64 2.42-5.84 2.42-1.45 0-2.87-.38-4.12-1.11l-.3-.17-3.12.82.83-3.04-.19-.31c-.8-1.28-1.23-2.76-1.23-4.29 0-4.54 3.7-8.24 8.24-8.24zm4.52 11.58c-.25-.13-1.48-.73-1.71-.81-.23-.09-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.38-.44.13-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.78 2.72 4.31 3.81.6.26 1.07.42 1.44.54.61.19 1.16.17 1.6.1.49-.07 1.48-.61 1.69-1.19.21-.58.21-1.08.15-1.19-.06-.11-.22-.18-.47-.31z"/>
+          </svg>
+          <span>Finalizar Pedido via WhatsApp</span>
+        </button>
+
+        <button id="cartContinueBtn" class="btn btn-link btn-block">
+          Continuar Escolhendo
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       Modal de Visualização Rápida (Quick View)
+       ========================================================================= -->
+  <div class="modal-overlay" id="quickViewModal" role="dialog" aria-modal="true" style="display: none;">
+    <div class="modal-dialog">
       <button class="modal-close-btn" id="modalCloseBtn" aria-label="Fechar detalhes">&times;</button>
-      <div class="modal-body" id="modalBody">
+      
+      <div class="modal-content-grid" id="modalProductDetails">
         <!-- Preenchido via app.js -->
       </div>
     </div>
   </div>
 
-  <!-- Carrinho Lateral (Drawer) -->
-  <div class="drawer-overlay" id="cartOverlay">
-    <aside class="cart-drawer" id="cartDrawer">
-      <div class="drawer-header">
-        <div class="drawer-title">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="9" cy="21" r="1"></circle>
-            <circle cx="20" cy="21" r="1"></circle>
-            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-          </svg>
-          <h2>Seu Carrinho</h2>
-        </div>
-        <button class="drawer-close-btn" id="cartCloseBtn" aria-label="Fechar carrinho">&times;</button>
-      </div>
-
-      <!-- Lista de Itens do Carrinho -->
-      <div class="cart-items" id="cartItemsList">
-        <!-- Renderizado dinamicamente -->
-      </div>
-
-      <!-- Rodapé do Carrinho -->
-      <div class="cart-footer" id="cartFooter">
-        <!-- Cupom de Desconto -->
-        <div class="coupon-section">
-          <div class="coupon-input-group">
-            <input type="text" id="couponInput" placeholder="Cupom (ex: NEXUS10)">
-            <button id="applyCouponBtn" class="btn btn-outline-sm">Aplicar</button>
-          </div>
-          <p id="couponFeedback" class="coupon-feedback"></p>
-        </div>
-
-        <!-- Totais -->
-        <div class="cart-summary">
-          <div class="summary-row">
-            <span>Subtotal</span>
-            <span id="cartSubtotal">R$ 0,00</span>
-          </div>
-          <div class="summary-row discount-row" id="discountRow" style="display: none;">
-            <span>Desconto (10%)</span>
-            <span id="cartDiscount">- R$ 0,00</span>
-          </div>
-          <div class="summary-row shipping-row">
-            <span>Frete</span>
-            <span class="free-shipping">Grátis</span>
-          </div>
-          <div class="summary-row total-row">
-            <strong>Total</strong>
-            <strong id="cartTotal">R$ 0,00</strong>
-          </div>
-        </div>
-
-        <!-- Botões de Checkout -->
-        <div class="checkout-actions">
-          <button id="checkoutWhatsAppBtn" class="btn btn-whatsapp-checkout">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-            </svg>
-            Finalizar Pedido via WhatsApp
-          </button>
-          <button id="clearCartBtn" class="btn-clear-cart">Esvaziar Carrinho</button>
-        </div>
-      </div>
-    </aside>
-  </div>
-
-  <!-- Container de Toasts / Notificações -->
+  <!-- Contêiner de Notificações Toast -->
   <div class="toast-container" id="toastContainer"></div>
-
-  <!-- Rodapé -->
-  <footer class="footer">
-    <div class="container footer-container">
-      <div class="footer-col">
-        <div class="brand">
-          <div class="brand-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-              <polyline points="2 17 12 22 22 17"></polyline>
-              <polyline points="2 12 12 17 22 12"></polyline>
-            </svg>
-          </div>
-          <span class="brand-text">Nexus<strong>Tech</strong></span>
-        </div>
-        <p class="footer-desc">Sua loja de confiança para gadgets modernos, periféricos e acessórios de alta qualidade.</p>
-      </div>
-
-      <div class="footer-col">
-        <h4>Categorias</h4>
-        <ul>
-          <li><a href="#catalog" onclick="filterByCategory('audio')">Fones & Áudio</a></li>
-          <li><a href="#catalog" onclick="filterByCategory('wearables')">Smartwatches</a></li>
-          <li><a href="#catalog" onclick="filterByCategory('perifericos')">Periféricos</a></li>
-          <li><a href="#catalog" onclick="filterByCategory('acessorios')">Acessórios</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>Atendimento</h4>
-        <ul>
-          <li>Segunda a Sexta: 09h às 18h</li>
-          <li>Sábado: 09h às 13h</li>
-          <li>E-mail: contato@nexustech.com.br</li>
-          <li>WhatsApp: (11) 99999-9999</li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>Formas de Pagamento</h4>
-        <div class="payment-methods">
-          <span class="pay-tag">Pix</span>
-          <span class="pay-tag">Cartão de Crédito</span>
-          <span class="pay-tag">Boleto</span>
-        </div>
-        <p class="security-note">🔒 Compra 100% protegida com certificado SSL</p>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <div class="container footer-bottom-inner">
-        <p>© 2026 NexusTech Store. Todos os direitos reservados.</p>
-        <p>Desenvolvido com HTML5, CSS3 e JavaScript puro.</p>
-      </div>
-    </div>
-  </footer>
 
   <!-- Scripts -->
   <script src="products.js"></script>

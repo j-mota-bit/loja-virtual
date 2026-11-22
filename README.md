@@ -1,61 +1,42 @@
-# NexusTech — Loja Virtual & Catálogo de Produtos 🛒
+# AURA — Casa, Decoração & Utensílios de Cozinha 🏺✨
 
-Site moderno, responsivo e de alta performance desenvolvido com **HTML5 puro, CSS3 moderno e Vanilla JavaScript**. Sem dependências pesadas, super rápido e pronto para ser publicado gratuitamente no **GitHub Pages**!
+E-commerce sofisticado, elegante e responsivo focado no nicho de **Casa, Decoração Afetiva, Cerâmicas Artesanais, Utensílios de Cozinha e Mesa Posta**.
+
+Desenvolvido com **HTML5 semântico, CSS3 moderno com estética editorial orgânica e Vanilla JavaScript** de alta performance, sem dependências pesadas e compatível com **GitHub Pages**.
 
 ---
 
-## ✨ Recursos Inclusos
+## ✨ Destaques Visuais & Experiência do Usuário (UX/UI)
 
-- 🛍️ **Catálogo Dinâmico:** Produtos organizados por categorias (Fones, Smartwatches, Periféricos, Acessórios) com badges promocionais (*Destaque*, *Mais Vendido*, *Promoção*).
-- 🔍 **Busca em Tempo Real & Filtros:** Busca instantânea por nome ou categoria, além de ordenação por menor preço, maior preço e avaliações.
-- 👁️ **Quick View (Modal de Detalhes):** Visualização rápida de especificações técnicas, parcelamento sem juros e botão de compra.
-- 🛒 **Carrinho de Compras Interativo (Drawer):**
-  - Adição e remoção de produtos com controle de quantidade (+ / -).
-  - Cálculo automático de subtotal e frete grátis.
-  - Suporte a cupons de desconto (ex: `NEXUS10`).
-  - Persistência dos dados no `localStorage` (o carrinho não se perde ao atualizar a página).
-- 💬 **Checkout Direto via WhatsApp:** Gera automaticamente uma mensagem formatada com todos os itens do pedido, valores e total pronto para envio ao seu número.
-- 🌓 **Modo Claro / Escuro (Dark Mode):** Alternância instantânea com persistência de preferência.
-- 📱 **Totalmente Responsivo:** Design impecável em computadores, tablets e smartphones.
+- 🏺 **Curadoria de Design & Estética Editorial:** Tipografia nobre (*Playfair Display* e *Plus Jakarta Sans*), paleta em tons de terracota, linho natural, madeira nobre e ouro envelhecido.
+- 🌓 **Modo Claro & Escuro (Dark Mode):** Transição suave com paleta em carvão mineral e âmbar quente.
+- 🔍 **Filtros por Categoria & Busca em Tempo Real:** Filtragem instantânea por Vasos & Decoração, Utensílios de Cozinha, Mesa Posta, Aromas e Têxteis.
+- 🛍️ **Sacola de Compras Interativa (Slide Drawer):**
+  - Barra de progresso dinâmica para **Frete Grátis** (meta configurável, ex: R$ 250).
+  - Controle de quantidades (+/-), cálculo em tempo real e remoção de itens.
+  - Cupons de desconto ativos: `BEMVINDO` (10% OFF), `AURA15` (15% OFF) e `CASA20` (20% OFF).
+  - Cálculo de parcelamento em até 6x sem juros.
+- 💬 **Checkout Estruturado via WhatsApp:** Gera automaticamente um pedido formatado com saudação, itens, subtotal, frete, desconto e campos para o cliente preencher dados de entrega.
+- 👁️ **Quick View (Espiar Detalhes):** Modal com especificações técnicas da peça, dimensões, materiais e instruções de cuidados.
+- ❤️ **Favoritos (Wishlist):** Salve itens com um clique e filtre seus produtos prediletos.
+- 📱 **100% Responsivo:** Otimizado para smartphones, tablets e telas amplas.
 
 ---
 
 ## 🚀 Como testar localmente
 
-Abra um terminal na pasta do projeto e inicie um servidor local:
+Basta abrir o arquivo [index.html](index.html) dando dois cliques para ver no seu navegador!
 
+Ou se preferir via linha de comando:
 ```powershell
-# Se tiver Python instalado:
-python -m http.server 3000
-
-# Ou simplesmente dê dois cliques no arquivo index.html para abrir direto no navegador!
+# Iniciar servidor local rápido
+npx serve .
 ```
 
 ---
 
 ## ⚙️ Como Personalizar
 
-1. **Seus Produtos:** Abra o arquivo [products.js](products.js) para alterar nomes, preços, fotos e descrições dos produtos.
-2. **Seu Número do WhatsApp:** No arquivo [app.js](app.js), na linha `CONFIG.whatsappNumber`, substitua `5511999999999` pelo seu número de WhatsApp com código do país (55) e DDD.
-3. **Cupons de Desconto:** No [app.js](app.js), configure os cupons e porcentagens no objeto `CONFIG.validCoupons`.
-
----
-
-## 🌐 Como Publicar no GitHub Pages (Grátis)
-
-Como você já tem o GitHub configurado no seu ambiente (`j-mota-bit`), basta rodar os seguintes comandos para criar o repositório e publicar:
-
-```powershell
-# 1. Salvar as alterações no Git
-git add .
-git commit -m "feat: site da loja virtual completo"
-
-# 2. Criar o repositório remoto público no GitHub via GitHub CLI
-gh repo create loja-virtual --public --source=. --remote=origin --push
-
-# 3. Ativar o GitHub Pages
-# Acesse o repositório no GitHub -> Settings -> Pages -> Source: Deploy from branch 'main' / 'root'
-```
-
-Seu site estará no ar gratuitamente em:
-`https://j-mota-bit.github.io/loja-virtual/`
+1. **Catálogo de Peças:** Edite o arquivo [products.js](products.js) para alterar nomes, preços, categorias, fotos do Unsplash e especificações.
+2. **Seu WhatsApp para Receber os Pedidos:** No arquivo [app.js](app.js), na linha `CONFIG.whatsappNumber`, substitua pelo seu número com DDD (ex: `5511999999999`).
+3. **Metas de Frete Grátis & Cupons:** Também no arquivo [app.js](app.js) dentro do objeto `CONFIG`.
