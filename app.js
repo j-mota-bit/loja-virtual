@@ -1,55 +1,71 @@
 /**
- * AURA Casa & Décor — Application Logic
- * Curadoria de Decoração, Utensílios de Cozinha & Mesa Posta
+ * SONOMA & CO. — Kitchen, Table & Entertaining
+ * Application Logic & E-Commerce Core
+ * Inspirado na experiência de compra da Williams-Sonoma
  */
 
 // ==========================================================================
 // Configurações Globais
 // ==========================================================================
 const CONFIG = {
-  whatsappNumber: "5511999999999", // Altere para seu número com DDD (ex: 5511999999999)
-  storeName: "AURA Casa & Décor",
-  freeShippingGoal: 250.00,
+  whatsappNumber: "5511999999999", // Configure para seu WhatsApp com DDD
+  storeName: "SONOMA & CO. — Thanksgiving & Holiday Feast",
+  freeShippingGoal: 299.00,
   validCoupons: {
-    "BEMVINDO": 0.10, // 10% de desconto
-    "AURA10": 0.10,   // 10% de desconto
-    "AURA15": 0.15,   // 15% de desconto
-    "CASA20": 0.20    // 20% de desconto
+    "SONOMA10": 0.10,   // 10% de desconto
+    "CEIA15": 0.15,     // 15% de desconto
+    "THANKS20": 0.20,   // 20% de desconto
+    "BEMVINDO": 0.10
   }
 };
 
 // ==========================================================================
-// Estado Global da Aplicação
+// Estado Global
 // ==========================================================================
 let state = {
   category: "all",
+  priceRange: "all",
+  selectedMaterials: [],
   searchQuery: "",
   sortBy: "default",
-  cart: JSON.parse(localStorage.getItem("aura_cart") || "[]"),
-  wishlist: JSON.parse(localStorage.getItem("aura_wishlist") || "[]"),
-  appliedCoupon: localStorage.getItem("aura_coupon") || null,
-  theme: localStorage.getItem("aura_theme") || "light"
+  cart: JSON.parse(localStorage.getItem("sonoma_cart") || "[]"),
+  wishlist: JSON.parse(localStorage.getItem("sonoma_wishlist") || "[]"),
+  appliedCoupon: localStorage.getItem("sonoma_coupon") || null,
+  theme: localStorage.getItem("sonoma_theme") || "light"
 };
 
 // ==========================================================================
-// Seletores de Elementos DOM
+// Seletores DOM
 // ==========================================================================
 const elements = {
-  // Catálogo
+  // Catálogo & Filtros
   productsGrid: document.getElementById("productsGrid"),
   resultsCount: document.getElementById("resultsCount"),
   emptyState: document.getElementById("emptyState"),
   resetFiltersBtn: document.getElementById("resetFiltersBtn"),
+  clearAllFiltersBtn: document.getElementById("clearAllFiltersBtn"),
   sortSelect: document.getElementById("sortSelect"),
   searchInput: document.getElementById("searchInput"),
   clearSearchBtn: document.getElementById("clearSearchBtn"),
+  activeFilterChips: document.getElementById("activeFilterChips"),
 
-  // Navegação e Categorias
-  navLinks: document.querySelectorAll("[data-nav-category]"),
-  categoryPills: document.querySelectorAll(".category-pill-card"),
-  heroFilterUtensilsBtn: document.getElementById("heroFilterUtensilsBtn"),
-  editorialCtaBtn: document.getElementById("editorialCtaBtn"),
-  footerCategoryLinks: document.querySelectorAll("[data-footer-category]"),
+  // Navegação de Departamentos
+  deptLinks: document.querySelectorAll("[data-nav-category]"),
+  sidebarCatBtns: document.querySelectorAll("[data-sidebar-cat]"),
+  heroTiles: document.querySelectorAll("[data-hero-category]"),
+  footerCatLinks: document.querySelectorAll("[data-footer-cat]"),
+
+  // Contadores no Sidebar
+  countAll: document.getElementById("countAll"),
+  countAssadeiras: document.getElementById("countAssadeiras"),
+  countCutelaria: document.getElementById("countCutelaria"),
+  countMesa: document.getElementById("countMesa"),
+  countUtensilios: document.getElementById("countUtensilios"),
+  countConfeitaria: document.getElementById("countConfeitaria"),
+
+  // Filtros de Preço e Materiais
+  priceRadios: document.querySelectorAll('input[name="priceRange"]'),
+  materialCheckboxes: document.querySelectorAll('#materialFilterOptions input[type="checkbox"]'),
 
   // Tema
   themeToggleBtn: document.getElementById("themeToggleBtn"),
@@ -60,9 +76,10 @@ const elements = {
   wishlistBtn: document.getElementById("wishlistBtn"),
   wishlistCountBadge: document.getElementById("wishlistCountBadge"),
 
-  // Carrinho / Sacola
+  // Sacola Gourmet / Carrinho
   cartBtn: document.getElementById("cartBtn"),
   cartCountBadge: document.getElementById("cartCountBadge"),
+  headerCartTotal: document.getElementById("headerCartTotal"),
   cartDrawerCount: document.getElementById("cartDrawerCount"),
   cartOverlay: document.getElementById("cartOverlay"),
   cartDrawer: document.getElementById("cartDrawer"),
@@ -72,8 +89,8 @@ const elements = {
   cartItemsList: document.getElementById("cartItemsList"),
   cartEmptyState: document.getElementById("cartEmptyState"),
   cartFooter: document.getElementById("cartFooter"),
-  
-  // Totais & Frete
+
+  // Totais e Frete
   cartSubtotal: document.getElementById("cartSubtotal"),
   discountRow: document.getElementById("discountRow"),
   cartDiscount: document.getElementById("cartDiscount"),
@@ -88,15 +105,17 @@ const elements = {
   applyCouponBtn: document.getElementById("applyCouponBtn"),
   couponMessage: document.getElementById("couponMessage"),
 
-  // Checkout
+  // Checkout e Concierge
   checkoutWhatsAppBtn: document.getElementById("checkoutWhatsAppBtn"),
+  sidebarConciergeBtn: document.getElementById("sidebarConciergeBtn"),
+  utilityHelpBtn: document.getElementById("utilityHelpBtn"),
 
   // Modal Quick View
   quickViewModal: document.getElementById("quickViewModal"),
   modalCloseBtn: document.getElementById("modalCloseBtn"),
   modalProductDetails: document.getElementById("modalProductDetails"),
 
-  // Toast & Newsletter
+  // Newsletter e Toast
   toastContainer: document.getElementById("toastContainer"),
   newsletterForm: document.getElementById("newsletterForm"),
   newsletterNotice: document.getElementById("newsletterNotice")
@@ -123,7 +142,7 @@ const calculateInstallments = (price, maxInstallments = 6) => {
 function applyTheme(theme) {
   state.theme = theme;
   document.documentElement.setAttribute("data-theme", theme);
-  localStorage.setItem("aura_theme", theme);
+  localStorage.setItem("sonoma_theme", theme);
 
   if (theme === "dark") {
     elements.sunIcon.style.display = "none";
@@ -141,28 +160,58 @@ function toggleTheme() {
 }
 
 // ==========================================================================
-// Renderização do Catálogo de Produtos
+// Atualização de Contadores no Sidebar
+// ==========================================================================
+function updateSidebarCounts() {
+  const countByCat = (cat) => products.filter((p) => p.category === cat).length;
+
+  if (elements.countAll) elements.countAll.textContent = products.length;
+  if (elements.countAssadeiras) elements.countAssadeiras.textContent = countByCat("assadeiras");
+  if (elements.countCutelaria) elements.countCutelaria.textContent = countByCat("cutelaria");
+  if (elements.countMesa) elements.countMesa.textContent = countByCat("mesa");
+  if (elements.countUtensilios) elements.countUtensilios.textContent = countByCat("utensilios");
+  if (elements.countConfeitaria) elements.countConfeitaria.textContent = countByCat("confeitaria");
+}
+
+// ==========================================================================
+// Filtros e Ordenação de Produtos
 // ==========================================================================
 function getFilteredAndSortedProducts() {
   let list = [...products];
 
-  // Filtro por Categoria
+  // 1. Categoria
   if (state.category !== "all") {
     list = list.filter((p) => p.category === state.category);
   }
 
-  // Filtro por Busca de Texto
+  // 2. Faixa de Preço
+  if (state.priceRange === "under200") {
+    list = list.filter((p) => p.price <= 200);
+  } else if (state.priceRange === "200to400") {
+    list = list.filter((p) => p.price > 200 && p.price <= 400);
+  } else if (state.priceRange === "over400") {
+    list = list.filter((p) => p.price > 400);
+  }
+
+  // 3. Materiais Selecionados
+  if (state.selectedMaterials.length > 0) {
+    list = list.filter((p) => state.selectedMaterials.includes(p.material));
+  }
+
+  // 4. Busca por Texto
   if (state.searchQuery.trim() !== "") {
     const q = state.searchQuery.toLowerCase().trim();
     list = list.filter(
       (p) =>
         p.name.toLowerCase().includes(q) ||
+        p.brand.toLowerCase().includes(q) ||
         p.categoryLabel.toLowerCase().includes(q) ||
-        p.description.toLowerCase().includes(q)
+        p.description.toLowerCase().includes(q) ||
+        p.material.toLowerCase().includes(q)
     );
   }
 
-  // Ordenação
+  // 5. Ordenação
   switch (state.sortBy) {
     case "price-asc":
       list.sort((a, b) => a.price - b.price);
@@ -174,15 +223,85 @@ function getFilteredAndSortedProducts() {
       list.sort((a, b) => b.rating - a.rating || b.reviewsCount - a.reviewsCount);
       break;
     default:
-      // Mantém a ordem padrão da curadoria
       break;
   }
 
   return list;
 }
 
+// Renderizar Chips de Filtros Ativos
+function renderActiveFilterChips() {
+  const chips = [];
+
+  if (state.category !== "all") {
+    const sample = products.find((p) => p.category === state.category);
+    const label = sample ? sample.categoryLabel : state.category;
+    chips.push({ type: "category", label: `Departamento: ${label}` });
+  }
+
+  if (state.priceRange !== "all") {
+    let label = "";
+    if (state.priceRange === "under200") label = "Preço: Até R$ 200";
+    if (state.priceRange === "200to400") label = "Preço: R$ 200 a R$ 400";
+    if (state.priceRange === "over400") label = "Preço: Acima de R$ 400";
+    chips.push({ type: "price", label });
+  }
+
+  state.selectedMaterials.forEach((mat) => {
+    chips.push({ type: "material", value: mat, label: `Material: ${mat}` });
+  });
+
+  if (state.searchQuery) {
+    chips.push({ type: "search", label: `Busca: "${state.searchQuery}"` });
+  }
+
+  if (chips.length === 0) {
+    elements.activeFilterChips.innerHTML = "";
+    return;
+  }
+
+  elements.activeFilterChips.innerHTML = chips
+    .map((c) => {
+      return `
+        <span class="filter-chip">
+          <span>${c.label}</span>
+          <button data-remove-chip="${c.type}" ${c.value ? `data-chip-val="${c.value}"` : ""}>&times;</button>
+        </span>
+      `;
+    })
+    .join("");
+
+  // Eventos de remoção de chips
+  elements.activeFilterChips.querySelectorAll("[data-remove-chip]").forEach((btn) => {
+    btn.onclick = () => {
+      const type = btn.getAttribute("data-remove-chip");
+      if (type === "category") setCategory("all");
+      if (type === "price") {
+        state.priceRange = "all";
+        document.querySelector('input[name="priceRange"][value="all"]').checked = true;
+      }
+      if (type === "material") {
+        const val = btn.getAttribute("data-chip-val");
+        state.selectedMaterials = state.selectedMaterials.filter((m) => m !== val);
+        const checkbox = document.querySelector(`#materialFilterOptions input[value="${val}"]`);
+        if (checkbox) checkbox.checked = false;
+      }
+      if (type === "search") {
+        state.searchQuery = "";
+        elements.searchInput.value = "";
+        elements.clearSearchBtn.style.display = "none";
+      }
+      renderProducts();
+    };
+  });
+}
+
+// ==========================================================================
+// Renderização do Grid de Produtos
+// ==========================================================================
 function renderProducts() {
   const list = getFilteredAndSortedProducts();
+  renderActiveFilterChips();
 
   if (list.length === 0) {
     elements.productsGrid.innerHTML = "";
@@ -192,7 +311,7 @@ function renderProducts() {
   }
 
   elements.emptyState.style.display = "none";
-  elements.resultsCount.textContent = `${list.length} peça${list.length > 1 ? "s" : ""} exclusiva${list.length > 1 ? "s" : ""} disponível${list.length > 1 ? "is" : ""}`;
+  elements.resultsCount.textContent = `Mostrando ${list.length} item${list.length > 1 ? "s" : ""} da Coleção de Ceia`;
 
   elements.productsGrid.innerHTML = list
     .map((product) => {
@@ -203,10 +322,30 @@ function renderProducts() {
 
       let badgeHtml = "";
       if (product.badge) {
-        badgeHtml = `<span class="product-badge badge-${product.badgeType || "hot"}">${product.badge}</span>`;
+        badgeHtml = `<span class="product-badge badge-${product.badgeType || "exclusive"}">${product.badge}</span>`;
       } else if (discountPercentage > 0) {
-        badgeHtml = `<span class="product-badge badge-sale">-${discountPercentage}% OFF</span>`;
+        badgeHtml = `<span class="product-badge badge-exclusive">-${discountPercentage}% OFF</span>`;
       }
+
+      const swatchesHtml = product.swatches
+        ? `
+        <div class="product-swatches" title="Opções de acabamento disponíveis">
+          ${product.swatches
+            .map(
+              (s, idx) => `
+            <span 
+              class="swatch-pill ${idx === 0 ? "active" : ""}" 
+              style="background-color: ${s.color};" 
+              title="${s.name}" 
+              data-swatch-name="${s.name}"
+              data-product-id="${product.id}"
+            ></span>
+          `
+            )
+            .join("")}
+        </div>
+      `
+        : "";
 
       return `
         <article class="product-card" data-id="${product.id}">
@@ -215,7 +354,7 @@ function renderProducts() {
             <button 
               class="wishlist-toggle-btn ${isWishlisted ? "active" : ""}" 
               data-wishlist-id="${product.id}" 
-              title="${isWishlisted ? "Remover dos favoritos" : "Salvar nos favoritos"}"
+              title="${isWishlisted ? "Remover dos favoritos de ceia" : "Salvar nos favoritos"}"
               aria-label="Favoritar"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -224,19 +363,21 @@ function renderProducts() {
             </button>
             <img src="${product.image}" alt="${product.name}" loading="lazy">
             <button class="quick-view-btn-overlay" data-quick-id="${product.id}">
-              Espiar Detalhes
+              Espiar Ficha Técnica
             </button>
           </div>
 
           <div class="product-info">
-            <span class="product-category-label">${product.categoryLabel}</span>
+            <span class="product-brand">${product.brand}</span>
             <h3 class="product-name" title="${product.name}">${product.name}</h3>
             
             <div class="product-rating">
-              <span class="stars">★</span>
+              <span class="stars">★★★★★</span>
               <strong>${product.rating.toFixed(1)}</strong>
               <span>(${product.reviewsCount} avaliações)</span>
             </div>
+
+            ${swatchesHtml}
 
             <div class="product-pricing">
               <div class="price-row">
@@ -269,7 +410,7 @@ function renderProducts() {
 // Eventos nos Cards de Produtos
 // ==========================================================================
 function attachProductCardEvents() {
-  // Botões de Adicionar ao Carrinho
+  // Adicionar ao Carrinho
   document.querySelectorAll("[data-add-cart]").forEach((btn) => {
     btn.onclick = (e) => {
       e.stopPropagation();
@@ -278,7 +419,7 @@ function attachProductCardEvents() {
     };
   });
 
-  // Botões de Visualização Rápida (Quick View)
+  // Quick View
   document.querySelectorAll("[data-quick-id]").forEach((btn) => {
     btn.onclick = (e) => {
       e.stopPropagation();
@@ -287,12 +428,24 @@ function attachProductCardEvents() {
     };
   });
 
-  // Botões de Wishlist (Favoritos)
+  // Wishlist
   document.querySelectorAll("[data-wishlist-id]").forEach((btn) => {
     btn.onclick = (e) => {
       e.stopPropagation();
       const id = parseInt(btn.getAttribute("data-wishlist-id"), 10);
       toggleWishlist(id);
+    };
+  });
+
+  // Swatches
+  document.querySelectorAll(".swatch-pill").forEach((pill) => {
+    pill.onclick = (e) => {
+      e.stopPropagation();
+      const parent = pill.closest(".product-swatches");
+      parent.querySelectorAll(".swatch-pill").forEach((p) => p.classList.remove("active"));
+      pill.classList.add("active");
+      const swatchName = pill.getAttribute("data-swatch-name");
+      showToast(`Acabamento selecionado: ${swatchName}`, "info");
     };
   });
 }
@@ -309,10 +462,10 @@ function toggleWishlist(productId) {
     showToast(`"${product.name}" removido dos favoritos.`, "info");
   } else {
     state.wishlist.push(productId);
-    showToast(`"${product.name}" salvo nos seus favoritos! ❤️`, "success");
+    showToast(`"${product.name}" salvo nos seus favoritos de ceia! ❤️`, "success");
   }
 
-  localStorage.setItem("aura_wishlist", JSON.stringify(state.wishlist));
+  localStorage.setItem("sonoma_wishlist", JSON.stringify(state.wishlist));
   updateWishlistBadge();
   renderProducts();
 }
@@ -328,7 +481,7 @@ function updateWishlistBadge() {
 }
 
 // ==========================================================================
-// Modal Quick View (Visualização Rápida)
+// Modal Quick View (Ficha Técnica do Chef)
 // ==========================================================================
 function openQuickView(productId) {
   const product = products.find((p) => p.id === productId);
@@ -341,13 +494,13 @@ function openQuickView(productId) {
       <img src="${product.image}" alt="${product.name}">
     </div>
     <div class="modal-details">
-      <span class="product-category-label">${product.categoryLabel}</span>
+      <span class="product-brand" style="font-size: 0.8rem;">${product.brand}</span>
       <h2>${product.name}</h2>
       
       <div class="product-rating" style="margin-bottom: 0.75rem;">
         <span class="stars">★★★★★</span>
         <strong>${product.rating.toFixed(1)}</strong>
-        <span>(${product.reviewsCount} avaliações verificadas)</span>
+        <span>(${product.reviewsCount} avaliações verificadas de chefs e clientes)</span>
       </div>
 
       <div class="price-row" style="margin-bottom: 0.25rem;">
@@ -358,7 +511,7 @@ function openQuickView(productId) {
         ${calculateInstallments(product.price)}
       </div>
 
-      <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">
+      <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; margin-bottom: 1rem;">
         ${product.description}
       </p>
 
@@ -384,7 +537,7 @@ function openQuickView(productId) {
 
   document.getElementById("modalWishlistBtn").onclick = () => {
     toggleWishlist(product.id);
-    openQuickView(product.id); // re-render modal button
+    openQuickView(product.id);
   };
 
   elements.quickViewModal.style.display = "flex";
@@ -395,7 +548,7 @@ function closeQuickView() {
 }
 
 // ==========================================================================
-// Gerenciador do Carrinho / Sacola
+// Gerenciador da Sacola Gourmet (Carrinho)
 // ==========================================================================
 function addToCart(productId, quantity = 1) {
   const existingItem = state.cart.find((item) => item.id === productId);
@@ -408,10 +561,10 @@ function addToCart(productId, quantity = 1) {
   } else {
     state.cart.push({
       id: product.id,
+      brand: product.brand,
       name: product.name,
       price: product.price,
       image: product.image,
-      categoryLabel: product.categoryLabel,
       quantity: quantity
     });
   }
@@ -419,7 +572,7 @@ function addToCart(productId, quantity = 1) {
   saveCart();
   renderCart();
   openCartDrawer();
-  showToast(`"${product.name}" adicionado à sacola! ✨`, "success");
+  showToast(`"${product.name}" adicionado à sacola de ceia! 🦃`, "success");
 }
 
 function updateCartItemQuantity(productId, newQty) {
@@ -447,7 +600,7 @@ function removeFromCart(productId) {
 }
 
 function saveCart() {
-  localStorage.setItem("aura_cart", JSON.stringify(state.cart));
+  localStorage.setItem("sonoma_cart", JSON.stringify(state.cart));
 }
 
 function calculateCartTotals() {
@@ -469,6 +622,9 @@ function renderCart() {
   const totalCount = state.cart.reduce((sum, item) => sum + item.quantity, 0);
   elements.cartCountBadge.textContent = totalCount;
   elements.cartDrawerCount.textContent = `${totalCount} item${totalCount !== 1 ? "s" : ""}`;
+
+  const { subtotal, discount, isFreeShipping, total } = calculateCartTotals();
+  elements.headerCartTotal.textContent = formatCurrency(total);
 
   if (state.cart.length === 0) {
     elements.cartItemsList.innerHTML = "";
@@ -492,6 +648,7 @@ function renderCart() {
           </div>
           <div class="cart-item-details">
             <button class="cart-item-remove-btn" data-remove-id="${item.id}" title="Remover item">&times;</button>
+            <span class="cart-item-brand">${item.brand}</span>
             <h4 class="cart-item-title">${item.name}</h4>
             <div class="cart-item-price">${formatCurrency(item.price * item.quantity)}</div>
             <div class="cart-item-actions">
@@ -532,8 +689,6 @@ function renderCart() {
   });
 
   // Atualizar Totais
-  const { subtotal, discount, isFreeShipping, total } = calculateCartTotals();
-
   elements.cartSubtotal.textContent = formatCurrency(subtotal);
 
   if (discount > 0) {
@@ -546,11 +701,11 @@ function renderCart() {
   if (isFreeShipping) {
     elements.cartShippingValue.textContent = "Grátis ✨";
     elements.shippingProgressBar.style.width = "100%";
-    elements.shippingNoticeText.innerHTML = `🎉 Parabéns! Você ganhou <strong>Frete Grátis</strong>`;
+    elements.shippingNoticeText.innerHTML = `🎉 Parabéns! Você ganhou <strong>Frete Grátis</strong> na sua Ceia`;
   } else {
     const diff = CONFIG.freeShippingGoal - subtotal;
     const progressPercent = Math.min(100, Math.round((subtotal / CONFIG.freeShippingGoal) * 100));
-    elements.cartShippingValue.textContent = "Calculado no envio";
+    elements.cartShippingValue.textContent = "Calculado no fechamento";
     elements.shippingProgressBar.style.width = `${progressPercent}%`;
     elements.shippingNoticeText.innerHTML = `Faltam apenas <strong>${formatCurrency(diff)}</strong> para ganhar <strong>Frete Grátis</strong>!`;
   }
@@ -574,13 +729,13 @@ function applyCoupon() {
 
   if (CONFIG.validCoupons[code]) {
     state.appliedCoupon = code;
-    localStorage.setItem("aura_coupon", code);
+    localStorage.setItem("sonoma_coupon", code);
     const percent = CONFIG.validCoupons[code] * 100;
     elements.couponMessage.textContent = `Cupom ${code} aplicado: ${percent}% de desconto!`;
     elements.couponMessage.className = "coupon-message success";
     elements.couponMessage.style.display = "block";
     renderCart();
-    showToast(`Cupom de ${percent}% OFF aplicado! 🎉`, "success");
+    showToast(`Cupom de ${percent}% OFF aplicado com sucesso! 🦃`, "success");
   } else {
     elements.couponMessage.textContent = "Cupom inválido ou expirado.";
     elements.couponMessage.className = "coupon-message error";
@@ -589,7 +744,7 @@ function applyCoupon() {
 }
 
 // ==========================================================================
-// Checkout via WhatsApp
+// Checkout via WhatsApp (Concierge Gourmet)
 // ==========================================================================
 function checkoutViaWhatsApp() {
   if (state.cart.length === 0) {
@@ -598,15 +753,15 @@ function checkoutViaWhatsApp() {
   }
 
   const { subtotal, discount, isFreeShipping, total } = calculateCartTotals();
-  const orderId = "AURA-" + Math.floor(1000 + Math.random() * 9000);
+  const orderId = "SONOMA-" + Math.floor(1000 + Math.random() * 9000);
 
-  let message = `🌿 *NOVO PEDIDO DECORAÇÃO — ${CONFIG.storeName}*\n`;
+  let message = `🦃 *PEDIDO DE CEIA & FESTAS — ${CONFIG.storeName}*\n`;
   message += `📋 *Pedido:* #${orderId}\n`;
   message += `━━━━━━━━━━━━━━━━━━━━━\n\n`;
-  message += `*Itens Escolhidos:*\n`;
+  message += `*Itens Selecionados para a Ceia:*\n`;
 
   state.cart.forEach((item, index) => {
-    message += `${index + 1}. *${item.name}*\n`;
+    message += `${index + 1}. *[${item.brand}] ${item.name}*\n`;
     message += `   Qtd: ${item.quantity}x — ${formatCurrency(item.price * item.quantity)}\n`;
   });
 
@@ -615,19 +770,26 @@ function checkoutViaWhatsApp() {
   if (discount > 0) {
     message += `• *Desconto (${state.appliedCoupon}):* -${formatCurrency(discount)}\n`;
   }
-  message += `• *Frete:* ${isFreeShipping ? "Grátis 🎉" : "A combinar / Consultar CEP"}\n`;
+  message += `• *Frete:* ${isFreeShipping ? "Grátis Especial 🎉" : "A combinar / Consultar CEP"}\n`;
   message += `• *VALOR TOTAL:* ${formatCurrency(total)}\n`;
   message += `━━━━━━━━━━━━━━━━━━━━━\n\n`;
-  message += `📍 *Dados para Entrega:*\n`;
+  message += `📍 *Dados para Envio & Atendimento:*\n`;
   message += `• Nome Completo: \n`;
   message += `• CEP e Endereço: \n`;
   message += `• Forma de Pagamento (PIX com 5% OFF ou Cartão até 6x): \n\n`;
-  message += `_Olá! Gostaria de confirmar meu pedido e tirar dúvidas sobre a entrega._`;
+  message += `_Olá Chef Concierge! Gostaria de confirmar meu pedido e tirar dúvidas sobre prazos de entrega para a data da minha celebração._`;
 
   const encoded = encodeURIComponent(message);
   const whatsappUrl = `https://wa.me/${CONFIG.whatsappNumber}?text=${encoded}`;
 
   window.open(whatsappUrl, "_blank");
+}
+
+function openConciergeHelp() {
+  const text = encodeURIComponent(
+    `Olá Chef Concierge da Sonoma & Co.! Gostaria de ajuda para planejar os utensílios e louças para a minha Ceia de Festas.`
+  );
+  window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${text}`, "_blank");
 }
 
 // ==========================================================================
@@ -665,32 +827,30 @@ function showToast(message, type = "success") {
 }
 
 // ==========================================================================
-// Gerenciador de Filtros de Categoria
+// Seleção de Categoria
 // ==========================================================================
 function setCategory(cat) {
   state.category = cat;
 
-  // Atualizar Pills de Categoria
-  elements.categoryPills.forEach((pill) => {
-    pill.classList.toggle("active", pill.getAttribute("data-category") === cat);
+  // Atualizar Botões do Mega-Nav
+  elements.deptLinks.forEach((link) => {
+    link.classList.toggle("active", link.getAttribute("data-nav-category") === cat);
   });
 
-  // Atualizar Links de Navegação
-  elements.navLinks.forEach((link) => {
-    link.classList.toggle("active", link.getAttribute("data-nav-category") === cat);
+  // Atualizar Botões do Sidebar
+  elements.sidebarCatBtns.forEach((btn) => {
+    btn.classList.toggle("active", btn.getAttribute("data-sidebar-cat") === cat);
   });
 
   renderProducts();
 }
 
 // ==========================================================================
-// Inicialização & Event Listeners
+// Inicialização
 // ==========================================================================
 function init() {
-  // 1. Aplicar tema salvo
   applyTheme(state.theme);
-
-  // 2. Renderizar produtos e sacola
+  updateSidebarCounts();
   renderProducts();
   renderCart();
   updateWishlistBadge();
@@ -699,10 +859,10 @@ function init() {
     elements.couponInput.value = state.appliedCoupon;
   }
 
-  // 3. Eventos de Tema
+  // Tema
   elements.themeToggleBtn.onclick = toggleTheme;
 
-  // 4. Eventos de Busca
+  // Busca
   elements.searchInput.oninput = (e) => {
     state.searchQuery = e.target.value;
     elements.clearSearchBtn.style.display = state.searchQuery ? "block" : "none";
@@ -716,89 +876,111 @@ function init() {
     renderProducts();
   };
 
-  // 5. Evento de Ordenação
+  // Ordenação
   elements.sortSelect.onchange = (e) => {
     state.sortBy = e.target.value;
     renderProducts();
   };
 
-  // 6. Eventos de Categoria nas Pills
-  elements.categoryPills.forEach((pill) => {
-    pill.onclick = () => {
-      const cat = pill.getAttribute("data-category");
-      setCategory(cat);
-    };
-  });
-
-  // 7. Eventos de Navegação no Header
-  elements.navLinks.forEach((link) => {
-    link.onclick = (e) => {
-      e.preventDefault();
+  // Mega-Nav Departamentos
+  elements.deptLinks.forEach((link) => {
+    link.onclick = () => {
       const cat = link.getAttribute("data-nav-category");
       setCategory(cat);
       document.getElementById("catalogo").scrollIntoView({ behavior: "smooth" });
     };
   });
 
-  // 8. Eventos de Navegação no Footer
-  elements.footerCategoryLinks.forEach((link) => {
-    link.onclick = (e) => {
-      e.preventDefault();
-      const cat = link.getAttribute("data-footer-category");
+  // Sidebar Departamentos
+  elements.sidebarCatBtns.forEach((btn) => {
+    btn.onclick = () => {
+      const cat = btn.getAttribute("data-sidebar-cat");
+      setCategory(cat);
+    };
+  });
+
+  // Hero Quick Tiles
+  elements.heroTiles.forEach((tile) => {
+    tile.onclick = () => {
+      const cat = tile.getAttribute("data-hero-category");
       setCategory(cat);
       document.getElementById("catalogo").scrollIntoView({ behavior: "smooth" });
     };
   });
 
-  // 9. Botões de Hero e Editorial
-  if (elements.heroFilterUtensilsBtn) {
-    elements.heroFilterUtensilsBtn.onclick = () => {
-      setCategory("utensilios");
-      document.getElementById("catalogo").scrollIntoView({ behavior: "smooth" });
-    };
-  }
-
-  if (elements.editorialCtaBtn) {
-    elements.editorialCtaBtn.onclick = (e) => {
+  // Footer Links
+  elements.footerCatLinks.forEach((link) => {
+    link.onclick = (e) => {
       e.preventDefault();
-      setCategory("mesa");
+      const cat = link.getAttribute("data-footer-cat");
+      setCategory(cat);
       document.getElementById("catalogo").scrollIntoView({ behavior: "smooth" });
     };
-  }
+  });
 
-  // 10. Botão Limpar Filtros do Estado Vazio
-  elements.resetFiltersBtn.onclick = () => {
-    elements.searchInput.value = "";
+  // Filtros de Preço
+  elements.priceRadios.forEach((radio) => {
+    radio.onchange = (e) => {
+      state.priceRange = e.target.value;
+      renderProducts();
+    };
+  });
+
+  // Filtros de Materiais
+  elements.materialCheckboxes.forEach((checkbox) => {
+    checkbox.onchange = () => {
+      state.selectedMaterials = Array.from(elements.materialCheckboxes)
+        .filter((cb) => cb.checked)
+        .map((cb) => cb.value);
+      renderProducts();
+    };
+  });
+
+  // Limpar Filtros
+  const clearAllFilters = () => {
+    state.category = "all";
+    state.priceRange = "all";
+    state.selectedMaterials = [];
     state.searchQuery = "";
+    state.sortBy = "default";
+
+    elements.searchInput.value = "";
     elements.clearSearchBtn.style.display = "none";
     elements.sortSelect.value = "default";
-    state.sortBy = "default";
+    document.querySelector('input[name="priceRange"][value="all"]').checked = true;
+    elements.materialCheckboxes.forEach((cb) => (cb.checked = false));
+
     setCategory("all");
+    showToast("Filtros redefinidos.", "info");
   };
 
-  // 11. Eventos do Carrinho
+  elements.clearAllFiltersBtn.onclick = clearAllFilters;
+  elements.resetFiltersBtn.onclick = clearAllFilters;
+
+  // Sacola Gourmet
   elements.cartBtn.onclick = openCartDrawer;
   elements.cartCloseBtn.onclick = closeCartDrawer;
   elements.cartContinueBtn.onclick = closeCartDrawer;
   elements.cartEmptyContinueBtn.onclick = closeCartDrawer;
-  
+
   elements.cartOverlay.onclick = (e) => {
-    if (e.target === elements.cartOverlay) {
-      closeCartDrawer();
-    }
+    if (e.target === elements.cartOverlay) closeCartDrawer();
   };
 
   elements.applyCouponBtn.onclick = applyCoupon;
   elements.checkoutWhatsAppBtn.onclick = checkoutViaWhatsApp;
 
-  // 12. Eventos de Wishlist
+  // Concierge
+  if (elements.sidebarConciergeBtn) elements.sidebarConciergeBtn.onclick = openConciergeHelp;
+  if (elements.utilityHelpBtn) elements.utilityHelpBtn.onclick = (e) => { e.preventDefault(); openConciergeHelp(); };
+
+  // Wishlist Button
   elements.wishlistBtn.onclick = () => {
     if (state.wishlist.length === 0) {
-      showToast("Você ainda não salvou nenhum produto nos favoritos.", "info");
+      showToast("Você ainda não favoritou nenhuma peça de ceia.", "info");
       return;
     }
-    // Filtrar para exibir apenas favoritados no catálogo
-    showToast(`Mostrando seus ${state.wishlist.length} itens favoritos!`, "info");
+    showToast(`Mostrando seus ${state.wishlist.length} itens favoritos de ceia!`, "info");
     const favProducts = products.filter((p) => state.wishlist.includes(p.id));
     elements.productsGrid.innerHTML = "";
     elements.resultsCount.textContent = `${favProducts.length} peça${favProducts.length > 1 ? "s" : ""} favorita${favProducts.length > 1 ? "s" : ""}`;
@@ -809,17 +991,17 @@ function init() {
         return `
           <article class="product-card" data-id="${product.id}">
             <div class="product-image-container">
-              <span class="product-badge badge-hot">Favorito</span>
+              <span class="product-badge badge-exclusive">Favorito Ceia</span>
               <button class="wishlist-toggle-btn active" data-wishlist-id="${product.id}" title="Remover dos favoritos">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="#DC2626" stroke="#DC2626" stroke-width="2">
                   <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                 </svg>
               </button>
               <img src="${product.image}" alt="${product.name}">
-              <button class="quick-view-btn-overlay" data-quick-id="${product.id}">Espiar Detalhes</button>
+              <button class="quick-view-btn-overlay" data-quick-id="${product.id}">Espiar Ficha Técnica</button>
             </div>
             <div class="product-info">
-              <span class="product-category-label">${product.categoryLabel}</span>
+              <span class="product-brand">${product.brand}</span>
               <h3 class="product-name">${product.name}</h3>
               <div class="product-pricing">
                 <span class="current-price">${formatCurrency(product.price)}</span>
@@ -835,26 +1017,24 @@ function init() {
     document.getElementById("catalogo").scrollIntoView({ behavior: "smooth" });
   };
 
-  // 13. Modal Quick View
+  // Modal
   elements.modalCloseBtn.onclick = closeQuickView;
   elements.quickViewModal.onclick = (e) => {
-    if (e.target === elements.quickViewModal) {
-      closeQuickView();
-    }
+    if (e.target === elements.quickViewModal) closeQuickView();
   };
 
-  // 14. Newsletter Form
+  // Newsletter
   elements.newsletterForm.onsubmit = (e) => {
     e.preventDefault();
     const email = document.getElementById("newsletterEmail").value;
-    elements.newsletterNotice.textContent = `Obrigado! Enviamos o cupom de 10% OFF para ${email}`;
+    elements.newsletterNotice.textContent = `Receita exclusiva de ave & cupom de 10% OFF enviados para ${email}`;
     elements.newsletterNotice.style.color = "var(--accent-green)";
-    elements.newsletterNotice.style.fontWeight = "600";
+    elements.newsletterNotice.style.fontWeight = "700";
     elements.newsletterForm.reset();
-    showToast("Inscrição realizada com sucesso! Use o cupom BEMVINDO.", "success");
+    showToast("Inscrição no Clube Gastronômico realizada com sucesso! Use o cupom SONOMA10.", "success");
   };
 
-  // 15. Tecla Escape para fechar modais e drawer
+  // Tecla Escape
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       closeCartDrawer();
@@ -863,5 +1043,4 @@ function init() {
   });
 }
 
-// Iniciar a aplicação quando o DOM estiver pronto
 document.addEventListener("DOMContentLoaded", init);

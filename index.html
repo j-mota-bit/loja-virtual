@@ -3,60 +3,64 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AURA — Casa, Decoração & Utensílios de Cozinha</title>
-  <meta name="description" content="Curadoria exclusiva de decoração afetiva, cerâmicas artesanais, utensílios gourmet e peças para mesa posta. Transforme sua casa em um refúgio acolhedor.">
+  <title>SONOMA & CO. — Thanksgiving & Holiday Feast | Cozinha, Assados & Mesa Posta</title>
+  <meta name="description" content="A matriz oficial para sua Ceia de Ação de Graças e Festas. Assadeiras pesadas em aço inox, jogos de trinchar alemães forjados, panelas de ferro fundido e mesa posta refinada.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <!-- Barra Superior de Destaque -->
+  <!-- =========================================================================
+       1. Top Announcement Bar (Williams-Sonoma Signature Utility Bar)
+       ========================================================================= -->
   <div class="top-announcement">
     <div class="container announcement-content">
-      <span class="announcement-pill">Oferta Exclusiva</span>
-      <p class="announcement-text">
-        ✦ <strong>Frete Grátis</strong> para compras acima de R$ 250 • Use o cupom <strong>BEMVINDO</strong> para 10% OFF • Até 6x sem juros ✦
-      </p>
+      <div class="announcement-left">
+        <span class="announcement-badge">THE THANKSGIVING HEADQUARTERS</span>
+        <span class="announcement-text">
+          ✦ <strong>Frete Grátis</strong> em pedidos acima de R$ 299 • Use o cupom <strong>SONOMA10</strong> para 10% OFF na sua Ceia ✦
+        </span>
+      </div>
+      <div class="announcement-right">
+        <a href="#guia-ceia" class="utility-link">Guia de Assados</a>
+        <span class="utility-sep">•</span>
+        <a href="#receitas" class="utility-link">Receitas do Chef</a>
+        <span class="utility-sep">•</span>
+        <a href="#" class="utility-link" id="utilityHelpBtn">Atendimento Gourmet</a>
+      </div>
     </div>
   </div>
 
-  <!-- Header / Barra de Navegação Principal -->
+  <!-- =========================================================================
+       2. Main Header
+       ========================================================================= -->
   <header class="header" id="mainHeader">
     <div class="container header-container">
       
-      <!-- Marca / Logo -->
+      <!-- Marca / Logo no Estilo Clássico Williams-Sonoma -->
       <a href="#" class="brand">
-        <span class="brand-monogram">A</span>
+        <div class="brand-monogram">W&S</div>
         <div class="brand-text-group">
-          <span class="brand-name">AURA</span>
-          <span class="brand-tagline">CASA & OBJETOS</span>
+          <span class="brand-name">SONOMA & CO.</span>
+          <span class="brand-subline">SAN FRANCISCO • EST. 1956 • KITCHEN & HOME</span>
         </div>
       </a>
 
-      <!-- Menu de Navegação Rápida (Desktop) -->
-      <nav class="nav-menu">
-        <a href="#catalogo" class="nav-link active" data-nav-category="all">Todos</a>
-        <a href="#catalogo" class="nav-link" data-nav-category="decoracao">Decoração</a>
-        <a href="#catalogo" class="nav-link" data-nav-category="utensilios">Utensílios</a>
-        <a href="#catalogo" class="nav-link" data-nav-category="mesa">Mesa Posta</a>
-        <a href="#catalogo" class="nav-link" data-nav-category="aromas">Aromas</a>
-      </nav>
-
-      <!-- Barra de Busca -->
+      <!-- Barra de Busca Central -->
       <div class="search-box">
         <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        <input type="text" id="searchInput" placeholder="Buscar vasos, utensílios, velas..." autocomplete="off">
+        <input type="text" id="searchInput" placeholder="Buscar assadeiras, facas de trinchar, toalhas de linho, molheiras..." autocomplete="off">
         <button id="clearSearchBtn" class="clear-search-btn" title="Limpar busca" style="display: none;">&times;</button>
       </div>
 
       <!-- Ações do Cabeçalho -->
       <div class="header-actions">
-        <!-- Alternar Tema -->
+        <!-- Alternador de Modo Claro / Escuro -->
         <button id="themeToggleBtn" class="action-btn" title="Alternar tema claro/escuro" aria-label="Alternar tema">
           <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="5"></circle>
@@ -75,21 +79,24 @@
         </button>
 
         <!-- Favoritos / Wishlist -->
-        <button id="wishlistBtn" class="action-btn" title="Meus Favoritos" aria-label="Ver favoritos">
+        <button id="wishlistBtn" class="action-btn" title="Meus Favoritos de Ceia" aria-label="Ver favoritos">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
           </svg>
           <span id="wishlistCountBadge" class="badge-count" style="display: none;">0</span>
         </button>
 
-        <!-- Botão Sacola / Carrinho -->
-        <button id="cartBtn" class="action-btn cart-btn" aria-label="Abrir sacola de compras">
+        <!-- Sacola / Carrinho Gourmet -->
+        <button id="cartBtn" class="action-btn cart-btn" aria-label="Abrir sacola gourmet">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
             <line x1="3" y1="6" x2="21" y2="6"></line>
             <path d="M16 10a4 4 0 0 1-8 0"></path>
           </svg>
-          <span class="cart-btn-label">Sacola</span>
+          <div class="cart-btn-text">
+            <span class="cart-btn-label">Sacola</span>
+            <span class="cart-btn-subtotal" id="headerCartTotal">R$ 0,00</span>
+          </div>
           <span id="cartCountBadge" class="badge-count">0</span>
         </button>
       </div>
@@ -97,283 +104,384 @@
     </div>
   </header>
 
-  <!-- Hero Section Editorial -->
-  <section class="hero-section">
-    <div class="container hero-container">
-      
-      <!-- Texto do Hero -->
-      <div class="hero-content">
-        <div class="hero-pill">
-          <span class="pill-dot"></span>
-          <span>Coleção Harmonia 2026</span>
-        </div>
-        <h1 class="hero-title">
-          A arte de transformar espaços em <em>refúgios acolhedores</em>.
+  <!-- =========================================================================
+       3. Mega-Nav Bar (Departamentos de Cozinha & Mesa Posta)
+       ========================================================================= -->
+  <nav class="departments-nav">
+    <div class="container departments-container">
+      <button class="dept-link active" data-nav-category="all">
+        Todos os Itens da Ceia
+      </button>
+      <button class="dept-link" data-nav-category="assadeiras">
+        Assadeiras & Panelas
+      </button>
+      <button class="dept-link" data-nav-category="cutelaria">
+        Facas & Jogos de Trinchar
+      </button>
+      <button class="dept-link" data-nav-category="mesa">
+        Mesa Posta & Servir
+      </button>
+      <button class="dept-link" data-nav-category="utensilios">
+        Utensílios do Chef
+      </button>
+      <button class="dept-link" data-nav-category="confeitaria">
+        Confeitaria & Tortas
+      </button>
+      <a href="#guia-ceia" class="dept-link highlight-link">
+        🦃 Guia da Ceia Perfeita
+      </a>
+    </div>
+  </nav>
+
+  <!-- =========================================================================
+       4. Breadcrumb Navigation
+       ========================================================================= -->
+  <div class="breadcrumbs-bar">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Navegação estrutural">
+        <a href="#">Início</a>
+        <span class="crumb-separator">/</span>
+        <a href="#">Temporada de Festas</a>
+        <span class="crumb-separator">/</span>
+        <span class="crumb-current">The Thanksgiving & Holiday Feast</span>
+      </nav>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       5. Department Hero Banner (Estilo Williams-Sonoma)
+       ========================================================================= -->
+  <section class="ws-hero-banner">
+    <div class="container ws-hero-container">
+      <div class="ws-hero-content">
+        <span class="ws-hero-eyebrow">COLEÇÃO EXCLUSIVA DE CEIA & FESTAS</span>
+        <h1 class="ws-hero-title">
+          A Arte do Banquete: <em>Assados Impecáveis & Mesa Posta</em>
         </h1>
-        <p class="hero-description">
-          Curadoria autoral de cerâmicas artesanais, utensílios nobres para sua cozinha e peças de decoração desenhadas para durar gerações.
+        <p class="ws-hero-text">
+          Desde assadeiras pesadas em aço inox com grelha e jogos de trinchar forjados até porcelanas francesas e toalhas em puro linho belga — cada peça foi desenhada para transformar sua recepção em uma tradição inesquecível.
         </p>
+
+        <!-- Sub-departamentos Visuais Rápidos (Tiles) -->
+        <div class="ws-hero-tiles">
+          <button class="ws-tile" data-hero-category="assadeiras">
+            <span class="ws-tile-title">Assadeiras de Aço Inox</span>
+            <span class="ws-tile-action">Ver Peças →</span>
+          </button>
+          <button class="ws-tile" data-hero-category="cutelaria">
+            <span class="ws-tile-title">Facas de Trinchar</span>
+            <span class="ws-tile-action">Ver Peças →</span>
+          </button>
+          <button class="ws-tile" data-hero-category="mesa">
+            <span class="ws-tile-title">Travessas & Molheiras</span>
+            <span class="ws-tile-action">Ver Peças →</span>
+          </button>
+          <button class="ws-tile" data-hero-category="confeitaria">
+            <span class="ws-tile-title">Tortas & Confeitaria</span>
+            <span class="ws-tile-action">Ver Peças →</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       6. Layout Principal de Loja: 2 Colunas (Sidebar de Filtros + Grid de Produtos)
+       ========================================================================= -->
+  <section class="store-section" id="catalogo">
+    <div class="container store-layout">
+      
+      <!-- ==========================================
+           Sidebar de Filtros Avançados (Coluna Esquerda)
+           ========================================== -->
+      <aside class="store-sidebar">
         
-        <div class="hero-cta-group">
-          <a href="#catalogo" class="btn btn-primary">
-            <span>Explorar Coleção</span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-          </a>
-          <button class="btn btn-outline" id="heroFilterUtensilsBtn">
-            Ver Utensílios & Mesa
+        <div class="sidebar-header">
+          <h3>Filtrar por:</h3>
+          <button id="clearAllFiltersBtn" class="clear-filters-link">Limpar Filtros</button>
+        </div>
+
+        <!-- Filtro 1: Departamentos -->
+        <div class="filter-group">
+          <h4 class="filter-group-title">Departamentos</h4>
+          <ul class="filter-list">
+            <li>
+              <button class="filter-category-btn active" data-sidebar-cat="all">
+                <span>Todos os Itens</span>
+                <span class="filter-count" id="countAll">12</span>
+              </button>
+            </li>
+            <li>
+              <button class="filter-category-btn" data-sidebar-cat="assadeiras">
+                <span>Assadeiras & Panelas</span>
+                <span class="filter-count" id="countAssadeiras">2</span>
+              </button>
+            </li>
+            <li>
+              <button class="filter-category-btn" data-sidebar-cat="cutelaria">
+                <span>Facas & Cutelaria</span>
+                <span class="filter-count" id="countCutelaria">1</span>
+              </button>
+            </li>
+            <li>
+              <button class="filter-category-btn" data-sidebar-cat="mesa">
+                <span>Mesa Posta & Servir</span>
+                <span class="filter-count" id="countMesa">4</span>
+              </button>
+            </li>
+            <li>
+              <button class="filter-category-btn" data-sidebar-cat="utensilios">
+                <span>Utensílios do Chef</span>
+                <span class="filter-count" id="countUtensilios">3</span>
+              </button>
+            </li>
+            <li>
+              <button class="filter-category-btn" data-sidebar-cat="confeitaria">
+                <span>Confeitaria & Tortas</span>
+                <span class="filter-count" id="countConfeitaria">2</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Filtro 2: Faixa de Preço -->
+        <div class="filter-group">
+          <h4 class="filter-group-title">Faixa de Preço</h4>
+          <div class="filter-options">
+            <label class="filter-checkbox-label">
+              <input type="radio" name="priceRange" value="all" checked>
+              <span>Todos os Valores</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="radio" name="priceRange" value="under200">
+              <span>Até R$ 200,00</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="radio" name="priceRange" value="200to400">
+              <span>R$ 200,00 a R$ 400,00</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="radio" name="priceRange" value="over400">
+              <span>Acima de R$ 400,00</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Filtro 3: Materiais Nobres -->
+        <div class="filter-group">
+          <h4 class="filter-group-title">Material Principal</h4>
+          <div class="filter-options" id="materialFilterOptions">
+            <label class="filter-checkbox-label">
+              <input type="checkbox" value="Aço Inoxidável Triplo">
+              <span>Aço Inoxidável 18/10</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="checkbox" value="Ferro Fundido Esmaltado">
+              <span>Ferro Fundido Esmaltado</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="checkbox" value="Porcelana Francesa">
+              <span>Porcelana Francesa & Faiança</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="checkbox" value="Madeira Teca Maciça">
+              <span>Madeiras Nobres (Teca & Nogueira)</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="checkbox" value="100% Linho Belga">
+              <span>100% Linho Europeu</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Banner de Concierge Gourmet -->
+        <div class="sidebar-concierge-card">
+          <span class="concierge-badge">CHEF CONCIERGE</span>
+          <h4>Precisa de ajuda para planejar sua ceia?</h4>
+          <p>Nossos especialistas em culinária e harmonização estão disponíveis para indicar as peças certas para o tamanho da sua família.</p>
+          <button class="btn btn-outline btn-block" id="sidebarConciergeBtn">
+            Falar com Chef via WhatsApp
           </button>
         </div>
 
-        <!-- Micro-provas Sociais -->
-        <div class="hero-stats">
-          <div class="stat-item">
-            <div class="stat-stars">★★★★★</div>
-            <span class="stat-text"><strong>4.9 / 5</strong> de satisfação</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <span class="stat-number">+10.000</span>
-            <span class="stat-text">Casas transformadas</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <span class="stat-number">100%</span>
-            <span class="stat-text">Matérias-primas nobres</span>
-          </div>
-        </div>
-      </div>
+      </aside>
 
-      <!-- Imagens Estilizadas do Hero -->
-      <div class="hero-visual">
-        <div class="hero-image-card main-card">
-          <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=900&auto=format&fit=crop&q=85" alt="Sala de estar acolhedora e elegante decorada pela Aura" loading="eager">
-          <div class="floating-badge">
-            <span class="badge-subtitle">Design Orgânico</span>
-            <strong class="badge-title">Cerâmica Gres & Madeira Acácia</strong>
+      <!-- ==========================================
+           Área Principal de Produtos (Coluna Direita)
+           ========================================== -->
+      <main class="store-catalog-main">
+        
+        <!-- Barra de Controle do Catálogo -->
+        <div class="catalog-control-bar">
+          <div class="catalog-summary">
+            <h2 class="catalog-title">Coleção de Ação de Graças & Festas</h2>
+            <span class="catalog-items-count" id="resultsCount">Carregando catálogo...</span>
+          </div>
+
+          <!-- Seletor de Ordenação -->
+          <div class="sort-wrapper">
+            <label for="sortSelect">Ordenar por:</label>
+            <div class="select-styled">
+              <select id="sortSelect">
+                <option value="default">Destaques da Curadoria</option>
+                <option value="price-asc">Menor Preço</option>
+                <option value="price-desc">Maior Preço</option>
+                <option value="rating">Mais Bem Avaliados (★)</option>
+              </select>
+            </div>
           </div>
         </div>
-        <div class="hero-image-card sub-card">
-          <img src="https://images.unsplash.com/photo-1590794056226-79ef3a8147e1?w=500&auto=format&fit=crop&q=85" alt="Utensílios de cozinha nobres em madeira" loading="lazy">
+
+        <!-- Chips de Filtros Ativos -->
+        <div class="active-filter-chips" id="activeFilterChips"></div>
+
+        <!-- Grid de Produtos no Padrão Williams-Sonoma -->
+        <div class="products-grid" id="productsGrid">
+          <!-- Renderizado dinamicamente via app.js -->
         </div>
-      </div>
+
+        <!-- Estado Vazio -->
+        <div class="empty-state" id="emptyState" style="display: none;">
+          <div class="empty-icon">🦃</div>
+          <h3>Nenhum item encontrado</h3>
+          <p>Nenhum produto corresponde aos critérios de filtro ou busca selecionados.</p>
+          <button id="resetFiltersBtn" class="btn btn-primary">Limpar Todos os Filtros</button>
+        </div>
+
+      </main>
 
     </div>
   </section>
 
-  <!-- Categorias Rápidas (Stories / Badges Visuais) -->
-  <section class="quick-categories-section">
-    <div class="container">
-      <div class="section-tag-center">Coleções em Foco</div>
-      <div class="categories-carousel">
-        <button class="category-pill-card active" data-category="all">
-          <span class="pill-icon">✨</span>
-          <span class="pill-name">Todos os Itens</span>
-        </button>
-        <button class="category-pill-card" data-category="decoracao">
-          <span class="pill-icon">🏺</span>
-          <span class="pill-name">Decoração & Vasos</span>
-        </button>
-        <button class="category-pill-card" data-category="utensilios">
-          <span class="pill-icon">🍳</span>
-          <span class="pill-name">Cozinha & Utensílios</span>
-        </button>
-        <button class="category-pill-card" data-category="mesa">
-          <span class="pill-icon">🍽️</span>
-          <span class="pill-name">Mesa Posta</span>
-        </button>
-        <button class="category-pill-card" data-category="aromas">
-          <span class="pill-icon">🕯️</span>
-          <span class="pill-name">Aromas & Iluminação</span>
-        </button>
-        <button class="category-pill-card" data-category="texteis">
-          <span class="pill-icon">🛋️</span>
-          <span class="pill-name">Têxteis & Conforto</span>
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Barra de Diferenciais / Trust Badges -->
-  <section class="trust-bar">
-    <div class="container trust-grid">
-      <div class="trust-card">
-        <div class="trust-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-          </svg>
-        </div>
-        <div class="trust-info">
-          <h4>Curadoria Exclusiva</h4>
-          <p>Peças autorais com acabamento artesanal único.</p>
-        </div>
-      </div>
-
-      <div class="trust-card">
-        <div class="trust-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-            <line x1="12" y1="22.08" x2="12" y2="12"></line>
-          </svg>
-        </div>
-        <div class="trust-info">
-          <h4>Embalagem Segura</h4>
-          <p>Proteção anti-impacto ecológica para cerâmicas e vidros.</p>
-        </div>
-      </div>
-
-      <div class="trust-card">
-        <div class="trust-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
-            <line x1="1" y1="10" x2="23" y2="10"></line>
-          </svg>
-        </div>
-        <div class="trust-info">
-          <h4>Até 6x Sem Juros</h4>
-          <p>Ou 5% de desconto especial em pagamentos via PIX.</p>
-        </div>
-      </div>
-
-      <div class="trust-card">
-        <div class="trust-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-          </svg>
-        </div>
-        <div class="trust-info">
-          <h4>Atendimento Consultivo</h4>
-          <p>Suporte humano via WhatsApp para harmonizar seu ambiente.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Seção Principal do Catálogo -->
-  <main class="catalog-section" id="catalogo">
+  <!-- =========================================================================
+       7. Chef's Advice & Thanksgiving Guide (Inspirado na Williams-Sonoma)
+       ========================================================================= -->
+  <section class="thanksgiving-guide-section" id="guia-ceia">
     <div class="container">
       
-      <!-- Cabeçalho do Catálogo com Filtros e Ordenação -->
-      <div class="catalog-header">
-        <div>
-          <span class="section-tag">Nossa Seleção</span>
-          <h2 class="section-title">Peças para Inspirar seu Lar</h2>
-          <p class="section-subtitle" id="resultsCount">Carregando catálogo...</p>
-        </div>
+      <div class="guide-header">
+        <span class="guide-eyebrow">WILLIAMS-SONOMA CULINARY ACADEMY</span>
+        <h2 class="guide-title">O Guia do Chef: Os Segredos do Assado Perfeito</h2>
+        <p class="guide-subtitle">Dicas essenciais de nossos especialistas para receber sua família com perfeição e sem estresse.</p>
+      </div>
 
-        <!-- Seletor de Ordenação -->
-        <div class="sort-wrapper">
-          <label for="sortSelect" class="sort-label">Ordenar por:</label>
-          <div class="select-styled">
-            <select id="sortSelect">
-              <option value="default">Destaques da Curadoria</option>
-              <option value="price-asc">Menor Preço</option>
-              <option value="price-desc">Maior Preço</option>
-              <option value="rating">Melhor Avaliados</option>
-            </select>
+      <div class="guide-cards-grid">
+        
+        <article class="guide-card">
+          <div class="guide-card-image">
+            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=600&auto=format&fit=crop&q=80" alt="Assadeira com ave dourando no forno" loading="lazy">
           </div>
-        </div>
-      </div>
+          <div class="guide-card-body">
+            <span class="guide-card-tag">Técnica de Forno</span>
+            <h3>A Assadeira Certa & o V-Rack</h3>
+            <p>
+              Nunca asse a ave diretamente no fundo da assadeira. A grelha em V suspende a carne, permitindo que o calor circule uniformemente por baixo e garantindo que toda a pele fique dourada e crocante, enquanto a gordura escorre para compor um molho rico.
+            </p>
+          </div>
+        </article>
 
-      <!-- Grid de Produtos -->
-      <div class="products-grid" id="productsGrid">
-        <!-- Renderizado dinamicamente via app.js -->
-      </div>
+        <article class="guide-card">
+          <div class="guide-card-image">
+            <img src="https://images.unsplash.com/photo-1593618998160-e34014e67546?w=600&auto=format&fit=crop&q=80" alt="Fatiando carnes com faca de trinchar forjada" loading="lazy">
+          </div>
+          <div class="guide-card-body">
+            <span class="guide-card-tag">Arte de Trinchar</span>
+            <h3>Descanso & Fatiamento à Mesa</h3>
+            <p>
+              Retire a carne do forno e deixe descansar por 25 a 30 minutos antes de cortar. Esse tempo redistribui os sucos nobres pelas fibras musculares. Utilize sempre uma faca de trinchar longa e bem afiada para fatiar em movimento único sem rasgar a carne.
+            </p>
+          </div>
+        </article>
 
-      <!-- Estado Vazio (Nenhum produto encontrado) -->
-      <div class="empty-state" id="emptyState" style="display: none;">
-        <div class="empty-icon">🏺</div>
-        <h3>Nenhuma peça encontrada</h3>
-        <p>Não encontramos produtos correspondentes ao seu filtro ou busca atual.</p>
-        <button id="resetFiltersBtn" class="btn btn-primary">Limpar Todos os Filtros</button>
+        <article class="guide-card">
+          <div class="guide-card-image">
+            <img src="https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?w=600&auto=format&fit=crop&q=80" alt="Mesa posta acolhedora com linho e porcelanas" loading="lazy">
+          </div>
+          <div class="guide-card-body">
+            <span class="guide-card-tag">Mesa de Festa</span>
+            <h3>A Harmonia da Mesa Posta</h3>
+            <p>
+              Combine a nobreza de uma toalha de linho jacquard com travessas ovais amplas e a clássica molheira francesa aquecida. Pratos quentes devem ser servidos em travessas pré-aquecidas para manter o sabor do primeiro ao último brinde.
+            </p>
+          </div>
+        </article>
+
       </div>
 
     </div>
-  </main>
+  </section>
 
-  <!-- Banner Editorial / Storytelling -->
-  <section class="editorial-banner">
-    <div class="container editorial-container">
-      <div class="editorial-image">
-        <img src="https://images.unsplash.com/photo-1615865417491-9941019fbc00?w=800&auto=format&fit=crop&q=80" alt="Mesa posta acolhedora" loading="lazy">
-      </div>
-      <div class="editorial-text">
-        <span class="editorial-tag">Guia de Estilo</span>
-        <h2>A arte da mesa posta: Como receber com afeto</h2>
-        <p>
-          Reunir quem amamos em volta da mesa é um dos maiores prazeres da vida. Nossas cerâmicas e utensílios em madeira nobre foram criados para tornar esses encontros inesquecíveis, cheios de beleza simples e autêntica.
-        </p>
-        <div class="editorial-quote">
-          “A casa deve ser a moldura que acolhe nossas melhores memórias.”
+  <!-- =========================================================================
+       8. Trust Bar / Garantias Gourmet
+       ========================================================================= -->
+  <section class="ws-trust-bar">
+    <div class="container ws-trust-grid">
+      <div class="ws-trust-item">
+        <div class="ws-trust-icon">🏆</div>
+        <div>
+          <h4>Padrão Williams-Sonoma</h4>
+          <p>Materiais de altíssimo calibre construídos para durar gerações.</p>
         </div>
-        <a href="#catalogo" class="btn btn-outline" id="editorialCtaBtn">Ver Linha Mesa & Cozinha</a>
+      </div>
+      <div class="ws-trust-item">
+        <div class="ws-trust-icon">📦</div>
+        <div>
+          <h4>Embalagem Segura Anti-Quebra</h4>
+          <p>Proteção térmica e amortecimento reforçado para cerâmicas e cristais.</p>
+        </div>
+      </div>
+      <div class="ws-trust-item">
+        <div class="ws-trust-icon">💳</div>
+        <div>
+          <h4>Até 6x Sem Juros ou 5% no PIX</h4>
+          <p>Condições facilitadas para você equipar toda a sua cozinha de festas.</p>
+        </div>
+      </div>
+      <div class="ws-trust-item">
+        <div class="ws-trust-icon">💬</div>
+        <div>
+          <h4>Chef Concierge no WhatsApp</h4>
+          <p>Consultoria personalizada direta para planejar sua ceia e cardápio.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Showcase Instagram / Galeria Social -->
-  <section class="instagram-showcase">
-    <div class="container">
-      <div class="instagram-header">
-        <span class="section-tag">Galeria Visual</span>
-        <h3 class="section-title">Inspire-se no @auracasa</h3>
-        <p class="section-subtitle">Compartilhe seu ambiente usando a hashtag <strong>#MinhaAuraHome</strong></p>
-      </div>
-      <div class="instagram-grid">
-        <div class="insta-item">
-          <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=600&auto=format&fit=crop&q=80" alt="Decoração minimalista" loading="lazy">
-          <div class="insta-overlay"><span>@auracasa</span></div>
-        </div>
-        <div class="insta-item">
-          <img src="https://images.unsplash.com/photo-1603006905003-be475563bc59?w=600&auto=format&fit=crop&q=80" alt="Vela aromática em ambiente decorado" loading="lazy">
-          <div class="insta-overlay"><span>@auracasa</span></div>
-        </div>
-        <div class="insta-item">
-          <img src="https://images.unsplash.com/photo-1590736704728-f4730bb30770?w=600&auto=format&fit=crop&q=80" alt="Tábua gourmet e utensílios de cozinha" loading="lazy">
-          <div class="insta-overlay"><span>@auracasa</span></div>
-        </div>
-        <div class="insta-item">
-          <img src="https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?w=600&auto=format&fit=crop&q=80" alt="Manta de linho em poltrona acolhedora" loading="lazy">
-          <div class="insta-overlay"><span>@auracasa</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Newsletter -->
+  <!-- =========================================================================
+       9. Newsletter & Clube Gastronômico
+       ========================================================================= -->
   <section class="newsletter-section">
     <div class="container newsletter-box">
       <div class="newsletter-content">
-        <span class="section-tag">Clube Aura</span>
-        <h3>Ganhe 10% OFF no seu primeiro pedido</h3>
-        <p>Receba em primeira mão lançamentos de coleções, inspirações para sua casa e cupons exclusivos.</p>
+        <span class="section-tag">CLUBE GASTRONÔMICO SONOMA</span>
+        <h3>Receba receitas exclusivas & 10% OFF na sua Ceia</h3>
+        <p>Cadastre seu e-mail para receber nossos guias de preparo de perus e carnes nobres, receitas clássicas de tortas e cupons sazonais.</p>
         <form class="newsletter-form" id="newsletterForm">
-          <input type="email" id="newsletterEmail" placeholder="Digite seu melhor e-mail..." required>
+          <input type="email" id="newsletterEmail" placeholder="Digite seu melhor e-mail gourmet..." required>
           <button type="submit" class="btn btn-primary">Inscrever-se</button>
         </form>
-        <span class="newsletter-notice" id="newsletterNotice">Sem spam. Você pode cancelar quando quiser.</span>
+        <span class="newsletter-notice" id="newsletterNotice">Sem spam. Você pode cancelar sua inscrição a qualquer momento.</span>
       </div>
     </div>
   </section>
 
-  <!-- Rodapé Elegante -->
+  <!-- =========================================================================
+       10. Footer no Estilo Williams-Sonoma
+       ========================================================================= -->
   <footer class="footer">
     <div class="container footer-grid">
       
       <!-- Coluna Marca -->
       <div class="footer-col brand-col">
         <div class="brand">
-          <span class="brand-monogram">A</span>
+          <div class="brand-monogram">W&S</div>
           <div class="brand-text-group">
-            <span class="brand-name">AURA</span>
-            <span class="brand-tagline">CASA & OBJETOS</span>
+            <span class="brand-name">SONOMA & CO.</span>
+            <span class="brand-subline">SAN FRANCISCO • EST. 1956</span>
           </div>
         </div>
         <p class="footer-description">
-          Curadoria de peças que contam histórias. Peças feitas com alma para lares cheios de vida e aconchego.
+          Desde 1956, inspirando pessoas a cozinhar, receber e celebrar a vida em volta de mesas generosas com os melhores utensílios do mundo.
         </p>
         <div class="social-links">
           <a href="#" aria-label="Instagram" class="social-icon">Instagram</a>
@@ -382,73 +490,73 @@
         </div>
       </div>
 
-      <!-- Links de Navegação -->
+      <!-- Departamentos -->
       <div class="footer-col">
-        <h4>Coleções</h4>
+        <h4>Departamentos</h4>
         <ul>
-          <li><a href="#catalogo" data-footer-category="decoracao">Decoração & Vasos</a></li>
-          <li><a href="#catalogo" data-footer-category="utensilios">Utensílios de Cozinha</a></li>
-          <li><a href="#catalogo" data-footer-category="mesa">Mesa Posta & Porcelanas</a></li>
-          <li><a href="#catalogo" data-footer-category="aromas">Velas & Aromatizadores</a></li>
-          <li><a href="#catalogo" data-footer-category="texteis">Têxteis & Mantas</a></li>
+          <li><a href="#catalogo" data-footer-cat="assadeiras">Assadeiras & Panelas Pesadas</a></li>
+          <li><a href="#catalogo" data-footer-cat="cutelaria">Facas de Chef & Jogos de Trinchar</a></li>
+          <li><a href="#catalogo" data-footer-cat="mesa">Travessas, Molheiras & Porcelanas</a></li>
+          <li><a href="#catalogo" data-footer-cat="utensilios">Termômetros & Pinças de Assados</a></li>
+          <li><a href="#catalogo" data-footer-cat="confeitaria">Formas de Tortas & Confeitaria</a></li>
         </ul>
       </div>
 
-      <!-- Ajuda e Políticas -->
+      <!-- Serviços & Culinária -->
       <div class="footer-col">
-        <h4>Atendimento & Suporte</h4>
+        <h4>Serviços & Inspiração</h4>
         <ul>
-          <li><a href="#">Dúvidas Frequentes (FAQ)</a></li>
-          <li><a href="#">Política de Trocas e Devoluções</a></li>
-          <li><a href="#">Prazos e Rastreamento</a></li>
-          <li><a href="#">Guia de Cuidados com as Peças</a></li>
-          <li><a href="#">Fale com Nossa Curadora</a></li>
+          <li><a href="#guia-ceia">O Guia da Ceia de Ação de Graças</a></li>
+          <li><a href="#">Tabela de Tempo de Forno por Peso</a></li>
+          <li><a href="#">Lista de Casamento & Presentes</a></li>
+          <li><a href="#">Trocas, Devoluções & Garantia</a></li>
+          <li><a href="#">Fale com nosso Chef Concierge</a></li>
         </ul>
       </div>
 
-      <!-- Pagamento e Segurança -->
+      <!-- Segurança & Formas de Pagamento -->
       <div class="footer-col">
-        <h4>Segurança & Pagamentos</h4>
-        <p class="footer-small">Pague com total segurança:</p>
+        <h4>Pagamento Seguro</h4>
+        <p class="footer-small">Finalize com total tranquilidade:</p>
         <div class="payment-badges">
           <span class="payment-badge">PIX (5% OFF)</span>
-          <span class="payment-badge">Cartão até 6x</span>
-          <span class="payment-badge">Boleto</span>
+          <span class="payment-badge">Visa & Mastercard até 6x</span>
+          <span class="payment-badge">Boleto Bancário</span>
         </div>
         <div class="security-seal">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
             <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
           </svg>
-          <span>Ambiente 100% Seguro & Protegido</span>
+          <span>Conexão Criptografada SSL 256-bit</span>
         </div>
       </div>
 
     </div>
 
-    <!-- Linha Final de Copyright -->
+    <!-- Linha de Copyright -->
     <div class="footer-bottom">
       <div class="container footer-bottom-content">
-        <p>&copy; 2026 AURA Casa & Décor. Todos os direitos reservados. Feito com amor e carinho.</p>
+        <p>&copy; 2026 SONOMA & CO. Inspirado na excelência culinária e hospitalidade da Williams-Sonoma. Todos os direitos reservados.</p>
         <div class="footer-bottom-links">
-          <a href="#">Termos de Uso</a>
+          <a href="#">Privacidade & Termos</a>
           <span>•</span>
-          <a href="#">Privacidade</a>
+          <a href="#">Acessibilidade</a>
         </div>
       </div>
     </div>
   </footer>
 
   <!-- =========================================================================
-       Gaveta Lateral do Carrinho (Drawer)
+       11. Gaveta Lateral da Sacola Gourmet (Drawer)
        ========================================================================= -->
   <div class="cart-overlay" id="cartOverlay">
-    <div class="cart-drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-label="Sacola de compras">
+    <div class="cart-drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-label="Sacola Gourmet">
       
       <!-- Cabeçalho da Sacola -->
       <div class="cart-header">
         <div class="cart-title-group">
-          <h3>Sua Sacola</h3>
+          <h3>Sua Sacola Gourmet</h3>
           <span class="cart-badge-qty" id="cartDrawerCount">0 itens</span>
         </div>
         <button id="cartCloseBtn" class="cart-close-btn" aria-label="Fechar sacola">&times;</button>
@@ -457,41 +565,40 @@
       <!-- Barra de Frete Grátis Dinâmica -->
       <div class="shipping-progress-box">
         <div class="shipping-label-group">
-          <span id="shippingNoticeText">Adicione mais R$ 250,00 para <strong>Frete Grátis</strong></span>
+          <span id="shippingNoticeText">Adicione mais R$ 299,00 para <strong>Frete Grátis</strong></span>
         </div>
         <div class="shipping-progress-bar">
           <div class="shipping-progress-fill" id="shippingProgressBar" style="width: 0%;"></div>
         </div>
       </div>
 
-      <!-- Lista de Itens do Carrinho -->
+      <!-- Corpo da Sacola -->
       <div class="cart-body">
         <div class="cart-items" id="cartItemsList">
           <!-- Renderizado via app.js -->
         </div>
 
-        <!-- Estado Vazio da Sacola -->
         <div class="cart-empty" id="cartEmptyState" style="display: none;">
-          <div class="cart-empty-icon">🛍️</div>
-          <h4>Sua sacola está vazia</h4>
-          <p>Inspire-se em nossas peças e preencha sua casa de aconchego.</p>
-          <button class="btn btn-outline" id="cartEmptyContinueBtn">Continuar Comprando</button>
+          <div class="cart-empty-icon">🦃</div>
+          <h4>Sua sacola de ceia está vazia</h4>
+          <p>Equipe sua cozinha com assadeiras, facas de trinchar e peças nobres para receber seus convidados com maestria.</p>
+          <button class="btn btn-outline" id="cartEmptyContinueBtn">Explorar Itens de Ceia</button>
         </div>
       </div>
 
-      <!-- Rodapé do Carrinho com Totais e Checkout WhatsApp -->
+      <!-- Rodapé da Sacola -->
       <div class="cart-footer" id="cartFooter">
         
         <!-- Cupom de Desconto -->
         <div class="coupon-box">
           <div class="coupon-input-wrapper">
-            <input type="text" id="couponInput" placeholder="Cupom de desconto (ex: BEMVINDO)" uppercase>
+            <input type="text" id="couponInput" placeholder="Cupom (ex: SONOMA10)" uppercase>
             <button id="applyCouponBtn" class="btn-coupon">Aplicar</button>
           </div>
           <div id="couponMessage" class="coupon-message" style="display: none;"></div>
         </div>
 
-        <!-- Linhas de Totais -->
+        <!-- Totais da Sacola -->
         <div class="cart-totals">
           <div class="total-row">
             <span>Subtotal</span>
@@ -502,28 +609,28 @@
             <span id="cartDiscount">- R$ 0,00</span>
           </div>
           <div class="total-row">
-            <span>Frete</span>
+            <span>Frete Especial</span>
             <span id="cartShippingValue" class="text-accent">Calcular no fechamento</span>
           </div>
           <div class="total-row total-highlight">
-            <span>Total Estimado</span>
+            <span>Total da Ceia</span>
             <span id="cartTotal">R$ 0,00</span>
           </div>
           <div class="installments-hint" id="cartInstallments">
-            ou até 6x sem juros
+            ou em até 6x sem juros
           </div>
         </div>
 
-        <!-- Botão Principal: Finalizar no WhatsApp -->
+        <!-- Botão WhatsApp com Atendimento Concierge -->
         <button id="checkoutWhatsAppBtn" class="btn btn-whatsapp btn-block">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm.01 1.67c4.55 0 8.24 3.7 8.24 8.24 0 2.2-.86 4.28-2.42 5.84-1.56 1.56-3.64 2.42-5.84 2.42-1.45 0-2.87-.38-4.12-1.11l-.3-.17-3.12.82.83-3.04-.19-.31c-.8-1.28-1.23-2.76-1.23-4.29 0-4.54 3.7-8.24 8.24-8.24zm4.52 11.58c-.25-.13-1.48-.73-1.71-.81-.23-.09-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.38-.44.13-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.78 2.72 4.31 3.81.6.26 1.07.42 1.44.54.61.19 1.16.17 1.6.1.49-.07 1.48-.61 1.69-1.19.21-.58.21-1.08.15-1.19-.06-.11-.22-.18-.47-.31z"/>
           </svg>
-          <span>Finalizar Pedido via WhatsApp</span>
+          <span>Finalizar Pedido com Chef Concierge</span>
         </button>
 
         <button id="cartContinueBtn" class="btn btn-link btn-block">
-          Continuar Escolhendo
+          Continuar Escolhendo Peças
         </button>
 
       </div>
@@ -532,15 +639,12 @@
   </div>
 
   <!-- =========================================================================
-       Modal de Visualização Rápida (Quick View)
+       12. Modal Quick View (Espiar Detalhes & Ficha Técnica)
        ========================================================================= -->
   <div class="modal-overlay" id="quickViewModal" role="dialog" aria-modal="true" style="display: none;">
     <div class="modal-dialog">
       <button class="modal-close-btn" id="modalCloseBtn" aria-label="Fechar detalhes">&times;</button>
-      
-      <div class="modal-content-grid" id="modalProductDetails">
-        <!-- Preenchido via app.js -->
-      </div>
+      <div class="modal-content-grid" id="modalProductDetails"></div>
     </div>
   </div>
 
